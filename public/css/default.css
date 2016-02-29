@@ -1,0 +1,322 @@
+header{
+	background: black;
+	padding-top: 10px;
+	padding-bottom: 5px;
+	margin-bottom: 0px;
+	border-top: 5px solid #F5631E;
+	box-shadow: 0px 5px 20px rgba(0,0,0,0.9);
+}
+header .logo{
+	margin-bottom: 10px;
+}
+.hcontacto{
+	color: #CACACA;
+}
+header nav{
+	margin-top: 35px;
+}
+
+header li a {
+    color: rgb(230, 230, 230);
+    font-size: 1.3em;
+    font-weight: bold;
+}
+header .nav > li > a:hover, .nav > li > a:focus {
+    background-color: transparent;
+    color: #E07D28;
+}
+
+/*boton resposivo menu*/
+.boton-menu{
+	position: absolute;
+	margin-left: 1em;
+	z-index: 1;
+}
+
+
+/*ESTILOS PARA BOTONES*/
+.btn{
+	border-radius: 0px;
+}
+
+/*ESTILOS PARA .form-control*/
+
+.form-control{
+	border-radius: 0px;
+}
+
+
+.main{
+	margin-top: 30px;
+}
+
+/*MENU VERTICAL*/
+.menu-vertical .nav-stacked a{
+	color: #F5631E;
+}
+
+.menu-vertical .nav-stacked a:hover,
+.menu-vertical .nav-stacked nav > li > a:focus {
+    text-decoration: none;
+    background-color: #000;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.9);
+}
+.menu-vertical a{
+	font-size: 1.2em;
+}
+
+
+/*Contenido*/
+
+.page-header {
+    padding-bottom: 9px;
+    margin: 0px 0 35px;
+    border-bottom: 1px solid #eee;
+}
+.page-header h1{
+	margin-top: 0px;
+}
+
+/*PRODUCTOS*/
+.producto{
+	float: left;
+	border: 0px none transparent;
+	border-radius: none;
+	box-shadow: 5px 5px 10px #ccc;
+}
+.producto.thumbnail{
+	width: 100%;
+}
+.producto:hover {
+	box-shadow: 5px 5px 10px #999;
+}
+
+.descripcion h4{
+    margin-top: 0px;
+    margin-bottom: 3px;
+}
+
+.descripcion a{
+	color: #F5631E;
+}
+.descripcion a:hover, .descripcion a:focus, .descripcion a:visited{
+	color: #C34635;
+}
+
+
+
+
+
+
+/*------------Pagina de contacto-------------*/
+.contacto{
+	background: black;
+	color: white;
+	padding-top: 40px;
+	padding-bottom: 40px;
+}
+.contacto p{
+	font-size: 1.3em;
+}
+.contacto h1{
+	margin-top: 0px;
+}
+.contacto .tel{
+	padding: 10px 0px;
+	border-top: 1px dashed white;
+	border-bottom: 1px dashed white;
+}
+.contacto h3,.contacto h2{
+	margin-top: 0px;
+}
+.contacto h3.sinmargen{
+	margin-bottom: 0px;
+}
+#googleMap{
+	height: 400px;
+}
+
+
+
+
+/*--Pagina Portada--*/
+.portada{
+	margin-top: 35px;
+}
+.portada h1{
+	font-family: 'Cabin', sans-serif;
+	font-weight: bold;
+}
+.portada img{
+	width: 100%;
+}
+.w1{
+	padding-top: 0px;
+	padding-bottom: 20px;
+}
+.w1 h1{
+	font-size: 5em;
+	text-align: center;
+}
+.w2{
+	width: 100%;
+	height: 450px;
+	padding-top: 155px;
+	background: url('../imagenes/filtro-aire-auto-motor.jpg');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: 100% auto;
+}
+.w2 h1{
+	background-image: url('../imagenes/logoweb.png');
+	background-repeat: no-repeat;
+	width: 300px;
+	height: 110px;
+}
+.w3{
+	width: 100%;
+	height: 450px;
+	padding-top: 145px;
+	background: url('../imagenes/liquido-refrigerante.jpg');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: 100% auto;
+}
+.w3 h1{
+	background-image: url('../imagenes/drcare.png');
+	background-repeat: no-repeat;
+	width: 300px;
+	height: 110px;
+}
+.w4{
+	width: 100%;
+	height: 450px;
+	padding-top: 90px;
+	background: url('../imagenes/cambio-aceite-coche.jpg');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: 100% auto;
+}
+.w4 h1{
+	background-image: url('../imagenes/pdv.png');
+	background-repeat: no-repeat;
+	width: 300px;
+	height: 300px;
+}
+.container.vspray{
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+.vspray .img-thumbnail{
+	border:0px none transparent;
+}
+
+
+
+
+/*------------------*/
+
+footer{
+	background-color: #000;
+	color: white;
+	border-bottom: 5px solid #F5631E;
+}
+footer h3{
+	border-bottom: 1px dashed #eee;
+	padding-bottom: 5px;
+}
+
+.arrow-before {
+    width:0px;
+    height:0px;
+    border-left: 20px solid transparent;  /* izquierda flecha */
+    border-right: 20px solid transparent; /* derecha flecha */
+    border-bottom: 20px solid black; /* base flecha y color*/
+    font-size:0px;
+    line-height:0px;
+    top: -56px;
+    left: 50%;
+    position: relative;
+}
+
+
+/* Small devices (tablets, 998px and up) */
+@media (max-width: 998px) {
+	.logo-centrado{
+		text-align: center;
+	}
+	.contacto .tel{
+		margin-top: 20px;
+	}
+}
+
+@media (max-width: 500px){
+	.producto{
+		font-size: 1em;
+	}
+	.w2,.w3,.w4{
+		height: 300px;
+	}
+	.w2{
+		padding-top: 80px;
+	}
+	.w3{
+		padding-top: 80px;
+	}
+	.w4{
+		padding-top: 30px;
+	}
+}
+
+@media (min-width: 501px) and (max-width: 767px){
+	.producto{
+		font-size: 1.4em;
+	}
+}
+
+@media (min-width: 975px) and (max-width: 1300px){
+	.descripcion{
+		height: 150px;
+		overflow: auto;
+	}
+}
+}
+@media (min-width: 975px) and (max-width: 1200px){
+	.w1 h1{
+		font-size: 4em;
+	}
+}
+
+@media (min-width: 600px) and (max-width: 974px){
+	.w1 h1{
+		font-size: 3em;
+	}
+}
+@media (max-width: 599px){
+	.w1 h1{
+		font-size: 2em;
+	}
+	.contacto h1{
+		margin-top: 15px;
+		font-size: 2em;
+	}
+	.contacto p{
+		font-size: 1em;
+	}
+	.contacto h2{
+		font-size: 2em;
+	}
+	.contacto h3{
+		font-size: 1.5em;
+	}
+
+}
+@media (max-width: 960px){
+	.w2,.w3,.w4{
+		background-size: 150% 100%;
+	}
+}
+

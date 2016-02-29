@@ -12,5 +12,25 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('portada');
+});
+
+Route::get('/productos', function () {
+    return view('productos');
+});
+
+Route::get('/contacto', function () {
+    return view('contacto');
+});
+
+Route::get('/filtros', function () {
+    return view('filtros');
+});
+
+Route::get('/drcare', function () {
+    return view('drcare');
+});
+
+Route::get('/pdv', function () {
+    return view('pdv');
 });
