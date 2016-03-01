@@ -8,6 +8,7 @@
 			<a href="{{url('/drcare')}}">Dr. Care</a>
 			<a href="{{url('/pdv')}}">PDV</a>
 
+
 		</nav>
 		<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
 			<h3>Menu</h3>
@@ -34,6 +35,7 @@
 		  		<li class=""><a href="{{url('/')}}">Inicio</a></li>
 		  		<li><a href="{{url('/productos')}}">Productos</a></li>
 		  		<li><a href="{{url('/contacto')}}">Contacto</a></li>
+					<li><a href="{{url('/webmail')}}"><span class="glyphicon glyphicon-envelope"></span></a></li>
 			</ul>
 		</nav>
 	</div>
