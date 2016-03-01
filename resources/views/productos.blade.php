@@ -13,7 +13,7 @@
 					</ul>
 				<br>
 				<br>
-				<div class="well">
+				<div class="well hidden">
 					<h5><a href="">Como ser Cliente</a></h5>
 					<h5><a href="">Como Comprar</a></h5>
 				</div>
@@ -23,10 +23,10 @@
 
 		<div class="col-md-10">
 			<div class="page-header">
-			  <h1>Productos Destacado</h1>
+			  <h1>Productos Destacados</h1>
 			</div>
 			<div class="row">
-				
+
 				<div class="col-md-4 col-sm-6 col-xs-12">
 					<div class="producto thumbnail">
 						<div class="col-md-6 col-sm-6 col-xs-6">
@@ -38,7 +38,7 @@
 							<h4><a href="">Champú Dr. Care 1 Litro</a></h4>
 							<p>Champú para vehículo presentación de 1 litro.</p>
 						</div>
-					</div>							
+					</div>
 				</div>
 				<!---->
 
@@ -53,7 +53,7 @@
 							<h4><a href="">Profesional Bidón</a></h4>
 							<p>Champú para vehículo presentación en bidón.</p>
 						</div>
-					</div>							
+					</div>
 				</div>
 				<!---->
 
@@ -68,7 +68,7 @@
 							<h4><a href="">Champú Dr. Care  Galón</a></h4>
 							<p>Champú para vehículo presentación en galón.</p>
 						</div>
-					</div>							
+					</div>
 				</div>
 				<!---->
 
@@ -83,7 +83,7 @@
 							<h4><a href="">WEB W-3387</a></h4>
 							<p>Aceite Full Flow Chevette, Corsica, Impala, Malibú, Corsa.</p>
 						</div>
-					</div>							
+					</div>
 				</div>
 
 				<!---->
@@ -99,7 +99,7 @@
 							<h4><a href="">WEB W-3614</a></h4>
 							<p>Aceite Full Flow Arauca, Grand Vitara, Neon, EcoSport, Fiesta.</p>
 						</div>
-					</div>							
+					</div>
 				</div>
 
 				<!---->
@@ -115,7 +115,7 @@
 							<h4><a href="">WEB W-4967</a></h4>
 							<p>Aceite Full Flow Spark, Grand Tiger, Celica, Camry, Corolla, Terios, Yaris.</p>
 						</div>
-					</div>							
+					</div>
 				</div>
 
 				<!---->
@@ -131,7 +131,7 @@
 							<h4><a href="">Extra Mutligrado 20W-50</a></h4>
 							<p>Aceite de motor mineral.</p>
 						</div>
-					</div>							
+					</div>
 				</div>
 				<!--1-->
 
@@ -146,7 +146,7 @@
 							<h4><a href="">Supra MX 15W-40</a></h4>
 							<p>Aceite de motor semi-sintetico.</p>
 						</div>
-					</div>							
+					</div>
 				</div>
 				<!--2-->
 
@@ -161,11 +161,11 @@
 							<h4><a href="">Supra Premium 14W-40 </a></h4>
 							<p>Aceite de motor semi-sintetico.</p>
 						</div>
-					</div>							
+					</div>
 				</div>
 				<!--3-->
 
-			</div>			
+			</div>
 		</div>
 	</div>
 	</div>

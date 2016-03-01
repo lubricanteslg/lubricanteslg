@@ -13,21 +13,21 @@
 							</ul>
 						<br>
 						<br>
-						<div class="well">
+						<div class="well hidden">
 							<h5><a href="">Como ser Cliente</a></h5>
 							<h5><a href="">Como Comprar</a></h5>
 						</div>
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="col-md-10">
 				<!---->
 					<div class="page-header">
 					  <h1>Productos PDV</h1>
 					</div>
 					<div class="row">
-						
+
 						<div class="col-md-4 col-sm-6 col-xs-12">
 							<div class="producto thumbnail">
 								<div class="col-md-6 col-sm-6 col-xs-6">
@@ -39,7 +39,7 @@
 									<h4><a href="">Extra Mutligrado 20W-50</a></h4>
 									<p>Aceite de motor mineral.</p>
 								</div>
-							</div>							
+							</div>
 						</div>
 						<!--1-->
 
@@ -54,7 +54,7 @@
 									<h4><a href="">Supra MX 15W-40</a></h4>
 									<p>Aceite de motor semi-sintetico.</p>
 								</div>
-							</div>							
+							</div>
 						</div>
 						<!--2-->
 
@@ -69,7 +69,7 @@
 									<h4><a href="">Supra Premium 14W-40 </a></h4>
 									<p>Aceite de motor semi-sintetico.</p>
 								</div>
-							</div>							
+							</div>
 						</div>
 						<!--3-->
 
@@ -84,7 +84,7 @@
 									<h4><a href="">Moto Premium 4T 20W-50</a></h4>
 									<p>Aceite de motor de motos semi-sintetico.</p>
 								</div>
-							</div>							
+							</div>
 						</div>
 						<!--4-->
 
@@ -99,7 +99,7 @@
 									<h4><a href="">Transfluido DII</a></h4>
 									<p>Aceite para cajas automáticas.</p>
 								</div>
-							</div>							
+							</div>
 						</div>
 						<!--5-->
 
@@ -114,7 +114,7 @@
 									<h4><a href="">Transfluido DVI</a></h4>
 									<p>Aceite semi-sintetico para cajas automáticas.</p>
 								</div>
-							</div>							
+							</div>
 						</div>
 						<!--6-->
 
@@ -129,7 +129,7 @@
 									<h4><a href="">Moto Dos Tiempos</a></h4>
 									<p>Aceite de motor de motos dos tiempoos mineral.</p>
 								</div>
-							</div>							
+							</div>
 						</div>
 						<!--7-->
 
@@ -144,7 +144,7 @@
 									<h4><a href="">Hidralub I-68 Paila PDV</a></h4>
 									<p>Aceite Hidráulico ISO-68 en Paila.</p>
 								</div>
-							</div>							
+							</div>
 						</div>
 						<!--8-->
 
@@ -159,7 +159,7 @@
 									<h4><a href="">Supra Sintético Racing 5W-40</a></h4>
 									<p>Aceite Sintético para motor.</p>
 								</div>
-							</div>							
+							</div>
 						</div>
 						<!--9-->
 
@@ -174,10 +174,10 @@
 									<h4><a href="">Ultra Diesel Paila </a></h4>
 									<p>Aceite de motores Diesel en Paila.</p>
 								</div>
-							</div>							
+							</div>
 						</div>
 						<!--10-->
-					</div>								
+					</div>
 				</div>
 			</div>
 @stop

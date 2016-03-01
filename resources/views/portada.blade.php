@@ -3,7 +3,7 @@
 	<div class="container-fluid portada">
 		<div class="w1">
 			<div class="container">
-				<h1>Mayorista en Productos Automotrices</h1>
+				<h1	class="mainTitle">Mayorista en Productos Automotrices e Industriales</h1	>
 				<div class="col-md-6">
 					<img class="" src="imagenes/camion1.jpg" alt="">
 				</div>

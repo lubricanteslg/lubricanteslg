@@ -1,34 +1,34 @@
 <footer class="container-fluid">
-	<div class="col-md-8 col-md-offset-2">
-	<div class="col-md-4 col-sm-4">
+	<div class="col-md-10 col-md-offset-1">
+	<div class="col-sm-4">
 		<h3>Simón Ramirez</h3>
 		<address>
 		  <strong>Zona</strong><br>
-		  Caicara - Sombrero - Cabruta<br>
-		  <strong>Correo</strong> - mail@homail.com<br>
-		  <strong><abbr title="Telefono">Tel:</abbr></strong> 0414 355-2255
+		  El Sombrero - Barbacoas - Altagracia de Orituco - Chaguaramas - Las Mercedes - Cabruta - Caicara - Los Pijiguaos<br><br>
+		  <strong>Email:</strong> ventas.simon@diluga.com.ve<br>
+		  <strong><abbr title="Telefono">Tel:</abbr></strong> 0416-3366934 / 0426-3342417
 		</address>
 	</div>
-	<div class="col-md-4 col-sm-4">
-		<h3>Carlos Magno</h3>
+	<div class="col-sm-4">
+		<h3>Carlo Ríos</h3>
 		<address>
 		  <strong>Zona</strong><br>
-		  Caicara - Sombrero - Cabruta<br>
-		  <strong>Correo</strong> - mail@homail.com<br>
-		  <strong><abbr title="Telefono">Tel:</abbr></strong> 0414 355-2255
+		  Tucupido - Zaraza - El Socorro - Santa María - Pariaguan<br><br>
+		  <strong>Email:</strong> ventas.carlo@diluga.com.ve<br>
+		  <strong><abbr title="Telefono">Tel:</abbr></strong> 0426-5829891
 		</address>
 	</div>
-	<div class="col-md-4 col-sm-4">
-		<h3>Victor Capa</h3>
+	<div class="col-sm-4">
+		<h3>Víctor Cappa</h3>
 		<address>
 		  <strong>Zona</strong><br>
-		  Caicara - Sombrero - Cabruta<br>
-		  <strong>Correo</strong> - mail@homail.com<br>
-		  <strong><abbr title="Telefono">Tel:</abbr></strong> 0414 355-2255
+		  Valle de la Pascua<br><br>
+		  <strong>Email:</strong> ventas.victor@diluga.com.ve<br>
+		  <strong><abbr title="Telefono">Tel:</abbr></strong> 0416-9476635
 		</address>
 	</div>
 	</div>
 	<div class="clearfix"></div>
-		<h5 class="text-center">Distribuidora de Lubricantes Los Gallegos C.A</h5>
+		<h5 class="text-center">Distribuidora de Lubricantes Los Gallegos C.A - J30400806-6</h5>
 
 </footer>

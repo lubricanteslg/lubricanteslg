@@ -13,7 +13,7 @@
 						</ul>
 					<br>
 					<br>
-					<div class="well">
+					<div class="well hidden">
 						<h5><a href="">Como ser Cliente</a></h5>
 						<h5><a href="">Como Comprar</a></h5>
 					</div>
@@ -24,7 +24,7 @@
 			<div class="col-md-10">
 			<!---->
 				<div class="page-header">
-				  <h1>Filtros de Aceites</h1>
+				  <h1>Filtros de Aceite</h1>
 				</div>
 				<div class="row">
 

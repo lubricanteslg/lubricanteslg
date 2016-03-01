@@ -23,6 +23,20 @@ Route::get('/contacto', function () {
     return view('contacto');
 });
 
+Route::post('/contacto', function () {
+	$request = Request::all();
+  $data['body'] = $request;
+	$mail = Mail::send('emails.test', $data, function ($m) use ($request) {
+            $m->from('webadmin@diluga.com.ve', 'Web Admin');
+            $m->replyTo($request['email'], $request['name']);
+
+            $m->to('webadmin@diluga.com.ve', 'Web Admin')->subject($request['subject']);
+            $m->cc('ramonlv93@gmail.com');
+    });
+    return redirect('/');
+});
+
+
 Route::get('/filtros', function () {
     return view('filtros');
 });
