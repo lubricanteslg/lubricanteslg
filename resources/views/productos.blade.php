@@ -1,4 +1,5 @@
 @extends('master')
+@section('title', 'Diluga - Produtos Destacados')
 @section('content')
 	<div class="container-fluid main">
 		<div class="col-md-2 hidden-sm hidden-xs">

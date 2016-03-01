@@ -1,4 +1,5 @@
 @extends('master')
+@section('title', 'Diluga - Productos Dr. Care')
 @section('content')
 	<div class="container-fluid main">
 		<div class="col-md-2 hidden-sm hidden-xs">

@@ -1,4 +1,5 @@
 @extends('master')
+@section('title', 'Diluga - Contacto')
 @section('content')
 	<div class="container-fluid">
 

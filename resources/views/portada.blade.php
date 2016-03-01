@@ -1,4 +1,5 @@
 @extends('master')
+@section('title', 'Diluga - Inicio')
 @section('content')
 	<div class="container-fluid portada">
 		<div class="w1">
