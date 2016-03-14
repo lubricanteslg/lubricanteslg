@@ -48,3 +48,17 @@ Route::get('/drcare', function () {
 Route::get('/pdv', function () {
     return view('pdv');
 });
+
+
+
+
+
+
+Route::group(['prefix' => 'api'], function () {
+    Route::get('client', function ()    {
+        $client['name'] = "ramon";
+        $client['email'] = "ramonlv93@gmail.com";
+
+        return $client;
+    });
+});
