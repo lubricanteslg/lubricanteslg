@@ -23,7 +23,7 @@ class CreateProductsTable extends Migration
             $table->string('brand');
             $table->string('img_url');
             $table->timestamps();
-            
+
         });
     }
 
@@ -34,6 +34,6 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('products');
     }
 }
