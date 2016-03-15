@@ -16,7 +16,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'name' => $faker->name,
         'email' => $faker->email,
         'password' => bcrypt(str_random(10)),
-        'remember_token' => str_random(10),
+        'remember_token' => str_random(10)
     ];
 });
 
@@ -24,13 +24,38 @@ $factory->define(App\Client::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->company,
         'business_type' => 'J',
-        'business_id' => $faker->randomNumber($nbDigits = 9) // 79907610,
+        'business_id' => $faker->randomNumber($nbDigits = 9), // 79907610,
         'address' =>$faker->address,
         'phone' =>$faker->phoneNumber,
         'email' => $faker->email,
         'zone' => $faker->randomNumber($nbDigits = 1),
         'zone2' => $faker->randomNumber($nbDigits = 2),
         'salesman' => $faker->name,
-        'last_order' => $faker->date,
+        'last_order' => $faker->date
+    ];
+});
+
+$factory->define(App\Order::class, function (Faker\Generator $faker) {
+    return [
+            'date' => $faker->date,
+            'client_id' => $faker->randomNumber($nbDigits = 1),
+            'lines' => $faker->randomNumber($nbDigits = 1),
+            'subtotal' => $faker->randomNumber($nbDigits = 5),
+            'tax' => $faker->randomNumber($nbDigits = 3),
+            'total' => $faker->randomNumber($nbDigits = 5),
+            'user_id' => $faker->randomNumber($nbDigits = 1)
+
+    ];
+});
+
+$factory->define(App\OrderDetail::class, function (Faker\Generator $faker) {
+    return [
+             'order_id' => $faker->randomNumber($nbDigits = 1),
+             'product_code' => $faker->uuid,
+             'product_desc' => $faker->colorName,
+             'line' => $faker->randomNumber($nbDigits = 1),
+             'qty' => $faker->randomNumber($nbDigits = 1),
+             'price' => $faker->randomNumber($nbDigits = 5)
+
     ];
 });
