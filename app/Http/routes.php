@@ -54,11 +54,13 @@ Route::get('/pdv', function () {
 
 
 
-Route::group(['prefix' => 'api'], function () {
-    Route::get('client', function ()    {
-        $client['name'] = "ramon";
-        $client['email'] = "ramonlv93@gmail.com";
+Route::group(['prefix' => 'api/v1'], function () {
+    Route::get('clients/{id}', 'ClientsController@show');
+    Route::get('orders/{id}', 'OrdersController@show');
+    Route::get('products/{id}', 'ProductsController@show');
+});
 
-        return $client;
-    });
+Event::listen('illuminate.query', function($query)
+{
+    Log::info($query);
 });
