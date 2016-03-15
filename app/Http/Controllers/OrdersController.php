@@ -46,9 +46,18 @@ class OrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $req)
     {
-        //
+        $order = \App\Order::find($id);
+        
+        if ($req['client']) $order->load('client');
+        if ($req['detail']) $order->load('detail');
+
+        if(!$order)
+            abort(404, 'Not Found');
+        else
+
+            return $order;
     }
 
     /**
