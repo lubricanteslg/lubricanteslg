@@ -49,8 +49,9 @@ class OrdersController extends Controller
     public function show($id, Request $req)
     {
         $order = \App\Order::find($id);
-        
+
         if ($req['client']) $order->load('client');
+        if ($req['salesman']) $order->load('salesman.user');
         if ($req['detail']) $order->load('detail');
 
         if(!$order)

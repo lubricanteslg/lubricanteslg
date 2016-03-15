@@ -51,6 +51,7 @@ class ClientsController extends Controller
         $client = \App\Client::find($id);
 
         if($req['orders']) $client->load('orders.detail');
+        if($req['salesman']) $client->load('salesman');
 
         if(!$client)
             abort(404, 'Not Found');

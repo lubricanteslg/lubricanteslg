@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    public function getPrice() {
-        return $this->price/100;
+    public function department() {
+        return $this->belongsTo('App\Department');
     }
 }

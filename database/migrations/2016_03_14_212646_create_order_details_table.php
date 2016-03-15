@@ -22,7 +22,7 @@ class CreateOrderDetailsTable extends Migration
              $table->decimal('price', 12, 2);
              $table->timestamps();
 
-             $table->index('product_code');
+             $table->foreign('product_code')->references('code')->on('products');
              $table->foreign('order_id')->references('id')->on('orders');
 
          });

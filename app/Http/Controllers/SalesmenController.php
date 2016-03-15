@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class ProductsController extends Controller
+class SalesmenController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -48,15 +48,17 @@ class ProductsController extends Controller
      */
     public function show($id, Request $req)
     {
-        $product = \App\Product::find($id);
+        $salesman = \App\Salesman::find($id);
 
-        if ($req['dep']) $product->load('department');
+        if($req['clients']) $salesman->load('clients');
+        if($req['orders']) $salesman->load('orders');
+        if($req['user']) $salesman->load('user');
 
-        if(!$product)
+        if(!$salesman)
             abort(404, 'Not Found');
         else
 
-            return $product;
+            return $salesman;
     }
 
     /**
