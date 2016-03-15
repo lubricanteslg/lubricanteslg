@@ -12,19 +12,20 @@ class CreateClientsTable extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('clients', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('date');
-            $table->integer('client_id')->;
-            $table->tinyInteger('lines');
-            $table->integer('subtotal');
-            $table->integer('tax');
-            $table->integer('total');
-            $table->integer('user_id');
+            $table->string('name');
+            $table->string('business_type');
+            $table->string('business_id');
+            $table->string('address');
+            $table->string('phone');
+            $table->string('email');
+            $table->string('zone');
+            $table->string('zone2');
+            $table->integer('salesman');
+            $table->date('last_order');
             $table->timestamps();
 
-            $table->foreign('client_id')->references('id')->on('clients');
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -35,6 +36,6 @@ class CreateClientsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('orders');
+        Schema::drop('clients');
     }
 }
