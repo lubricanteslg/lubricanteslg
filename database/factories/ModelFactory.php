@@ -30,7 +30,7 @@ $factory->define(App\Client::class, function (Faker\Generator $faker) {
         'email' => $faker->email,
         'zone' => $faker->randomNumber($nbDigits = 1),
         'zone2' => $faker->randomNumber($nbDigits = 2),
-        'salesman' => $faker->name,
+        'salesman_id' => $faker->name,
         'last_order' => $faker->date
     ];
 });
@@ -43,7 +43,7 @@ $factory->define(App\Order::class, function (Faker\Generator $faker) {
             'subtotal' => $faker->randomNumber($nbDigits = 5),
             'tax' => $faker->randomNumber($nbDigits = 3),
             'total' => $faker->randomNumber($nbDigits = 5),
-            'user_id' => $faker->randomNumber($nbDigits = 1)
+            'salesman_id' => $faker->randomNumber($nbDigits = 1)
 
     ];
 });
@@ -56,6 +56,20 @@ $factory->define(App\OrderDetail::class, function (Faker\Generator $faker) {
              'line' => $faker->randomNumber($nbDigits = 1),
              'qty' => $faker->randomNumber($nbDigits = 1),
              'price' => $faker->randomNumber($nbDigits = 5)
+
+    ];
+});
+
+$factory->define(App\Product::class, function (Faker\Generator $faker) {
+    return [
+             'code' => $faker->unique()->randomNumber($nbDigits = 4),
+             'description' => $faker->domainWord,
+             'stock' => $faker->randomNumber($nbDigits = 3),
+             'price' => $faker->randomNumber($nbDigits = 5),
+             'department_id' => $faker->randomNumber($nbDigits = 1),
+             'category' => $faker->colorName,
+             'brand' => $faker->colorName,
+             'img_url' => $faker->imageUrl($width = 640, $height = 480),
 
     ];
 });

@@ -19,7 +19,7 @@ class CreateOrderDetailsTable extends Migration
              $table->string('product_desc');
              $table->tinyInteger('line');
              $table->smallInteger('qty');
-             $table->integer('price');
+             $table->decimal('price', 12, 2);
              $table->timestamps();
 
              $table->index('product_code');

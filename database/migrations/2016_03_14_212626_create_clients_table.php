@@ -22,10 +22,11 @@ class CreateClientsTable extends Migration
             $table->string('email');
             $table->string('zone');
             $table->string('zone2');
-            $table->integer('salesman');
+            $table->integer('salesman_id')->unsigned()  ;
             $table->date('last_order');
             $table->timestamps();
 
+            $table->foreign('salesman_id')->references('id')->on('salesmen');
         });
     }
 

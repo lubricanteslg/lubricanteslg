@@ -17,14 +17,14 @@ class CreateOrdersTable extends Migration
             $table->date('date');
             $table->integer('client_id')->unsigned();
             $table->tinyInteger('lines');
-            $table->integer('subtotal');
-            $table->integer('tax');
-            $table->integer('total');
-            $table->integer('user_id')->unsigned();
+            $table->decimal('subtotal',12, 2);
+            $table->decimal('tax',12, 2);
+            $table->decimal('total',12, 2);
+            $table->integer('salesman_id')->unsigned();
             $table->timestamps();
 
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('salesman_id')->references('id')->on('salesmen');
             $table->foreign('client_id')->references('id')->on('clients');
         });
 
