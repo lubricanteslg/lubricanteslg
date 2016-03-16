@@ -37,7 +37,58 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+            $input = $request->json()->all();
+
+            if (!$input) {
+                return response()->json('Wrong Body Data', 400);
+            } else {
+                $validation = \App\Order::validate($input);
+                $validateDetails = \App\OrderDetail::validateMany($input['detail']);
+
+                if ($validation !== true)
+                    return response()->json($validation->messages(), 400);
+
+                else if($validateDetails !== true)
+                    return response()->json($validateDetails->messages(), 400);
+
+                else {
+                    $order = new \App\Order;
+                    $order->date = $input['date'];
+                    $order->subtotal = $input['subtotal'];
+                    $order->tax = $input['tax'];
+                    $order->total = $input['total'];
+                    $order->lines = count($input['detail']);
+                    $order->salesman_id = $input['salesman_id'];
+                    $order->client_id = $input['client_id'];
+
+                    $order->save();
+                    $det = [];
+
+                    foreach($input['detail'] as $key=>$detail) {
+                        $orderDetail = new \App\OrderDetail;
+                        $orderDetail->order_id = $order->id;
+                        $orderDetail->product_code = $detail['product_code'];
+                        $orderDetail->product_desc = $detail['product_desc'];
+                        $orderDetail->line = $key;
+                        $orderDetail->qty = $detail['qty'];
+                        $orderDetail->price = $detail['price'];
+                        $orderDetail->save();
+
+                        $det[$key] = $orderDetail;
+                    }
+
+                    $order->detail = $det;
+
+                    return response()->json([
+                        "status" => 200,
+                        "statusText" => "Correctly Created Order With Id: ".$order->id,
+                        "order" => $order,
+                    ], 200);
+
+                }
+
+            }
+
     }
 
     /**
