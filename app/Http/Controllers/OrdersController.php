@@ -68,10 +68,10 @@ class OrdersController extends Controller
         $order->detail = $det;
 
         return response()->json([
-            "status" => 200,
+            "status" => 201,
             "statusText" => "Correctly Created Order With Id: ".$order->id,
             "order" => $order,
-        ], 200);
+        ], 201);
     }
 
     /**
@@ -115,8 +115,39 @@ class OrdersController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $order = \App\Order::with('detail')->find($id);
         $input = $request->json()->all();
-        return $input;
+
+        if($this->valid($input) !== true) return $this->valid($input);
+
+        foreach($order->detail as $key=>$detail) {
+            $detail->delete();
+        }
+
+        $order->subtotal = 0.00;
+
+        foreach($input['detail'] as $key=>$detail) {
+            $orderDetail = new \App\OrderDetail;
+            $orderDetail->order_id = $order->id;
+            $orderDetail->line = $key;
+            $orderDetail->fill($detail); //product_code, product_desc, price, qty.
+            $orderDetail->save();
+
+            $order->subtotal += round($orderDetail->price*$orderDetail->qty*100,2)/100;
+        }
+
+        $order->lines = count($input['detail']);
+        $order->tax = round($order->subtotal*0.12*100,2)/100;
+        $order->total = $order->subtotal + $order->tax;
+        $order->save();
+
+        $order = \App\Order::with('detail')->find($id); //Delete this soon.
+
+        return response()->json([
+            "status" => 200,
+            "statusText" => "OK: Correctly modified Order With Id: ".$order->id,
+            "order" => $order,
+        ], 200);
     }
 
     /**
@@ -136,7 +167,7 @@ class OrdersController extends Controller
      * @param  Array $input
      * @return \Illuminate\Http\Response
      */
-    private function valid($input)
+    private function valid($input, $editing = false)
     {
 
         if (!$input) {
@@ -144,13 +175,13 @@ class OrdersController extends Controller
             return response()->json('Bad Request: Wrong Body Data', 400);
         }
 
-        $validation = \App\Order::validate($input);
+        if (!$editing) $validation = \App\Order::validate($input);
         $validateDetails = \App\OrderDetail::validateMany($input['detail']);
 
         if ($validation !== true)
             return response()->json($validation->messages(), 400);
 
-        else if($validateDetails !== true)
+        if($validateDetails !== true)
             return response()->json($validateDetails->messages(), 400);
 
         else
