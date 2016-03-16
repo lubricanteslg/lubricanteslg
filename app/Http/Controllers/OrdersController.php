@@ -83,15 +83,12 @@ class OrdersController extends Controller
     public function show($id, Request $req)
     {
         $order = \App\Order::find($id);
-
-        if ($req['client']) $order->load('client');
-        if ($req['salesman']) $order->load('salesman.user');
-        if ($req['detail']) $order->load('detail');
-
         if(!$order)
             abort(404, 'Not Found');
         else
-
+            if ($req['client']) $order->load('client');
+            if ($req['salesman']) $order->load('salesman.user');
+            if ($req['detail']) $order->load('detail');
             return $order;
     }
 
@@ -158,7 +155,16 @@ class OrdersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(\App\Order::destroy($id))
+            return response()->json([
+                "status" => 200,
+                "statusText" => "OK: Correctly Deleted The Selected Order",
+            ], 200);
+        else
+            return response()->json([
+                "status" => 400,
+                "statusText" => "Bad Request",
+            ], 400);
     }
 
     /**

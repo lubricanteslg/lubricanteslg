@@ -23,7 +23,7 @@ class CreateOrderDetailsTable extends Migration
              $table->timestamps();
 
              $table->foreign('product_code')->references('code')->on('products');
-             $table->foreign('order_id')->references('id')->on('orders');
+             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
 
          });
 
