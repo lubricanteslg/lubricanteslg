@@ -52,14 +52,16 @@ Route::get('/pdv', function () {
 
 
 
-Route::get('api/auth/logout', 'Auth\AuthController@getLogout');
-Route::post('api/auth/login', 'Auth\AuthController@postLogin');
+Route::get('api/v1/logout', 'Auth\AuthController@getLogout');
+Route::post('api/v1/login', 'Auth\AuthController@postLogin');
 
-Route::group(['prefix' => 'api/v1', 'middleware' => 'auth.basic'], function () {
-    Route::get('clients/{id}', 'ClientsController@show');
-    Route::get('orders/{id}', 'OrdersController@show');
-    Route::get('products/{id}', 'ProductsController@show');
-    Route::get('salesmen/{id}', 'SalesmenController@show');
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
+
+Route::group(['prefix' => 'api/v1', /*'middleware' => 'auth'*/], function () {
+    Route::resource('clients', 'ClientsController');
+    Route::resource('orders', 'OrdersController');
+    Route::resource('products', 'ProductsController');
+    Route::resource('salesmen', 'SalesmenController');
 });
 
 
