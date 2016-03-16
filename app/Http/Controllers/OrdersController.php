@@ -37,58 +37,41 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-            $input = $request->json()->all();
+        $input = $request->json()->all();
+        if($this->valid($input) !== true) return $this->valid($input);
 
-            if (!$input) {
-                return response()->json('Wrong Body Data', 400);
-            } else {
-                $validation = \App\Order::validate($input);
-                $validateDetails = \App\OrderDetail::validateMany($input['detail']);
+        $order = new \App\Order;
+        $order->date = $input['date'];
+        $order->subtotal = $input['subtotal'];
+        $order->tax = $input['tax'];
+        $order->total = $input['total'];
+        $order->lines = count($input['detail']);
+        $order->salesman_id = $input['salesman_id'];
+        $order->client_id = $input['client_id'];
 
-                if ($validation !== true)
-                    return response()->json($validation->messages(), 400);
+        $order->save();
+        $det = [];
 
-                else if($validateDetails !== true)
-                    return response()->json($validateDetails->messages(), 400);
+        foreach($input['detail'] as $key=>$detail) {
+            $orderDetail = new \App\OrderDetail;
+            $orderDetail->order_id = $order->id;
+            $orderDetail->product_code = $detail['product_code'];
+            $orderDetail->product_desc = $detail['product_desc'];
+            $orderDetail->line = $key;
+            $orderDetail->qty = $detail['qty'];
+            $orderDetail->price = $detail['price'];
+            $orderDetail->save();
 
-                else {
-                    $order = new \App\Order;
-                    $order->date = $input['date'];
-                    $order->subtotal = $input['subtotal'];
-                    $order->tax = $input['tax'];
-                    $order->total = $input['total'];
-                    $order->lines = count($input['detail']);
-                    $order->salesman_id = $input['salesman_id'];
-                    $order->client_id = $input['client_id'];
+            $det[$key] = $orderDetail;
+        }
 
-                    $order->save();
-                    $det = [];
+        $order->detail = $det;
 
-                    foreach($input['detail'] as $key=>$detail) {
-                        $orderDetail = new \App\OrderDetail;
-                        $orderDetail->order_id = $order->id;
-                        $orderDetail->product_code = $detail['product_code'];
-                        $orderDetail->product_desc = $detail['product_desc'];
-                        $orderDetail->line = $key;
-                        $orderDetail->qty = $detail['qty'];
-                        $orderDetail->price = $detail['price'];
-                        $orderDetail->save();
-
-                        $det[$key] = $orderDetail;
-                    }
-
-                    $order->detail = $det;
-
-                    return response()->json([
-                        "status" => 200,
-                        "statusText" => "Correctly Created Order With Id: ".$order->id,
-                        "order" => $order,
-                    ], 200);
-
-                }
-
-            }
-
+        return response()->json([
+            "status" => 200,
+            "statusText" => "Correctly Created Order With Id: ".$order->id,
+            "order" => $order,
+        ], 200);
     }
 
     /**
@@ -132,7 +115,8 @@ class OrdersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $input = $request->json()->all();
+        return $input;
     }
 
     /**
@@ -144,5 +128,32 @@ class OrdersController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Validate the user input and abort the request if it's invalid.
+     *
+     * @param  Array $input
+     * @return \Illuminate\Http\Response
+     */
+    private function valid($input)
+    {
+
+        if (!$input) {
+
+            return response()->json('Bad Request: Wrong Body Data', 400);
+        }
+
+        $validation = \App\Order::validate($input);
+        $validateDetails = \App\OrderDetail::validateMany($input['detail']);
+
+        if ($validation !== true)
+            return response()->json($validation->messages(), 400);
+
+        else if($validateDetails !== true)
+            return response()->json($validateDetails->messages(), 400);
+
+        else
+            return true;
     }
 }
