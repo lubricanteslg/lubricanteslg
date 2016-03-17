@@ -14,9 +14,9 @@ class ClientsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return \App\Client::paginate($request['perPage'])->appends(['perPage' => $request['perPage']]);
     }
 
     /**
@@ -37,7 +37,16 @@ class ClientsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->json()->all();
+        if($this->valid($input) !== true) return $this->valid($input);
+
+        $client = \App\Client::create($input);
+
+        return response()->json([
+            "status" => 201,
+            "statusText" => "Correctly created client with id: ".$client->id,
+            "client" => $client,
+        ], 201);
     }
 
     /**
@@ -80,7 +89,20 @@ class ClientsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $input = $request->json()->all();
+        if($this->valid($input, $id) !== true) return $this->valid($input, $id);
+
+        $client = \App\Client::find($id);
+        $client->fill($input);
+
+        $client->save();
+
+
+        return response()->json([
+            "status" => 200,
+            "statusText" => "OK: Correctly modified Client With Id: ".$client->id,
+            "client" => $client,
+        ], 200);
     }
 
     /**
@@ -91,6 +113,38 @@ class ClientsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(\App\Client::destroy($id))
+            return response()->json([
+                "status" => 200,
+                "statusText" => "OK: Correctly Deleted The Selected Client",
+            ], 200);
+        else
+            abort(400, "Bad Request");
+    }
+
+    /**
+     * Validate the user input and abort the request if it's invalid.
+     *
+     * @param  Array $input
+     * @return \Illuminate\Http\Response
+     */
+    private function valid($input, $editing = false)
+    {
+
+        if (!$input) {
+            return abort(400, "Bad Request: Wrong body data");
+        }
+        $custom['business_id'] = array('required_without:id', 'min:5', 'unique:clients,business_id,'.$editing);
+
+        $validation = \App\Client::validate($input, $custom);
+
+        if ($validation !== true)
+            return response()->json([
+                "status" => 400,
+                "statusText" => "Bad Request: Validation failed",
+                "errors" => $validation->messages()
+            ], 400);
+        else
+            return true;
     }
 }
