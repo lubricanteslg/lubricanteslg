@@ -14,9 +14,9 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return \App\Product::paginate($request['perPage'])->appends(['perPage' => $request['perPage']]);
     }
 
     /**
@@ -37,7 +37,17 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->json()->all();
+
+        if($this->valid($input) !== true) return $this->valid($input);
+
+        $product = \App\Product::create($input);
+
+        return response()->json([
+            "status" => 201,
+            "statusText" => "Correctly created product with id: ".$product->id,
+            "product" => $product,
+        ], 201);
     }
 
     /**
@@ -79,7 +89,20 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $input = $request->json()->all();
+        if($this->valid($input) !== true) return $this->valid($input);
+
+        $product = \App\Product::find($id);
+        $product->fill($input);
+
+        $product->save();
+
+
+        return response()->json([
+            "status" => 200,
+            "statusText" => "OK: Correctly modified product With Id: ".$product->id,
+            "product" => $product,
+        ], 200);
     }
 
     /**
@@ -90,6 +113,37 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(\App\Product::destroy($id))
+            return response()->json([
+                "status" => 200,
+                "statusText" => "OK: Correctly Deleted The Selected Product",
+            ], 200);
+        else
+            abort(400, "Bad Request");
+    }
+
+    /**
+     * Validate the user input and abort the request if it's invalid.
+     *
+     * @param  Array $input
+     * @return \Illuminate\Http\Response
+     */
+    private function valid($input, $editing = false)
+    {
+
+        if (!$input) {
+            return abort(400, "Bad Request: Wrong body data");
+        }
+
+        $validation = \App\Product::validate($input);
+
+        if ($validation !== true)
+            return response()->json([
+                "status" => 400,
+                "statusText" => "Bad Request: Validation failed",
+                "errors" => $validation->messages()
+            ], 400);
+        else
+            return true;
     }
 }
