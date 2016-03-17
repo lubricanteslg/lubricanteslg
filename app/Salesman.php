@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Salesman extends Model
 {
+    use LocalDates;
+    
     public function clients() {
         return $this->hasMany('App\Client');
     }

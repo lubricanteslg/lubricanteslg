@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    use LocalDates;
+    
     public static $rules = array(
                                 'date' => array('required', 'date'),
                                 'subtotal' => array('required', 'numeric'),

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderDetail extends Model
 {
+    use LocalDates;
+    
     protected $fillable = ['order_id', 'qty', 'product_code', 'product_desc', 'price'];
 
     public static $rules = array(
