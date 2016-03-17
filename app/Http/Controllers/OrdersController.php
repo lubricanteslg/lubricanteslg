@@ -161,10 +161,7 @@ class OrdersController extends Controller
                 "statusText" => "OK: Correctly Deleted The Selected Order",
             ], 200);
         else
-            return response()->json([
-                "status" => 400,
-                "statusText" => "Bad Request",
-            ], 400);
+            abort(400, "Bad Request");
     }
 
     /**

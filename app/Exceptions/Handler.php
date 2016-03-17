@@ -61,6 +61,7 @@ class Handler extends ExceptionHandler
 
             // Default response of 400
             $status['statusCode'] = 400;
+            $status['statusText'] = "Bad Request";
 
             // If this exception is an instance of HttpException
             if ($this->isHttpException($e))
