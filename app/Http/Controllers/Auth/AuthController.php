@@ -35,6 +35,29 @@ class AuthController extends Controller
     }
 
     /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function postRegister(Request $request)
+    {
+        $validator = $this->validator($request->all());
+        if ($validator !== true) return $validator;
+
+        \Auth::login($this->create($request->all()));
+
+        if ($request->wantsJson()) 
+            return response()->json([
+                "status" => 200,
+                "statusText" => "OK: Succesfully created and logged in",
+            ], 200);
+
+        else
+            return redirect($this->redirectPath());
+    }
+
+    /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
@@ -42,11 +65,20 @@ class AuthController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        $validation = Validator::make($data, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
         ]);
+
+        if ($validation->fails())
+            return response()->json([
+                "status" => 400,
+                "statusText" => "Bad Request: Validation failed",
+                "errors" => $validation->messages()
+            ], 400);
+        else
+            return true;
     }
 
     /**
