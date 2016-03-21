@@ -1,5 +1,5 @@
 <?php
-
+header('Content-Type: text/html; charset=UTF-8');
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -64,7 +64,91 @@ Route::group(['prefix' => 'api/v1', /*'middleware' => 'auth'*/], function () {
     Route::resource('salesmen', 'SalesmenController');
 });
 
+use \GuzzleHttp\Client;
 
+Route::get('/fetchclients', function () {
+    setlocale(LC_ALL, 'es_ES');
+    $file = fopen(storage_path()."/app/clients.csv", "r+");
+
+    $i = 0;
+    $headers = fgetcsv($file, $delimiter = ',');
+    $result;
+    while(!feof($file))
+    {
+        $line = fgetcsv($file, $delimiter = ',');
+
+            for ($j = 0; $j <= count($line)-1; $j++) {
+                $result[$i][$headers[$j]] = utf8_encode($line[$j]);
+            }
+
+
+        $i++;
+    }
+    $http = new Client();
+    fclose($file);
+
+    foreach($result as $key=>$client) {
+        if(isset($client['name'])){
+            $verify = \App\Client::whereCode($client['code'])->first();
+            if ($verify) {
+                $client['cod'] = true;
+                $res = $http->request('PUT', url('/').'/api/v1/clients/'.$client['code'], [
+                    'json' => $client
+                ]);
+                echo 'Updated Client: '.$client['code'].'<br>';
+            } else {
+                $res = $http->request('POST', url('/').'/api/v1/clients', [
+                    'json' => $client
+                ]);
+                echo 'Created Client: '.$client['code'].'<br>';
+            }
+        }
+    }
+
+
+});
+
+Route::get('/fetchproducts', function () {
+    setlocale(LC_ALL, 'es_ES');
+    $file = fopen(storage_path()."/app/products.csv", "r+");
+
+    $i = 0;
+    $headers = fgetcsv($file, $delimiter = ',');
+    $result;
+    while(!feof($file))
+    {
+        $line = fgetcsv($file, $delimiter = ',');
+
+            for ($j = 0; $j <= count($line)-1; $j++) {
+                $result[$i][$headers[$j]] = utf8_encode($line[$j]);
+            }
+
+
+        $i++;
+    }
+    $http = new Client();
+    fclose($file);
+
+    foreach($result as $key=>$product) {
+        if(isset($client['name'])){
+            $verify = \App\Product::whereCode($produt['code'])->first();
+            if ($verify) {
+                $product['cod'] = true;
+                $res = $http->request('PUT', url('/').'/api/v1/products/'.$product['code'], [
+                    'json' => $product
+                ]);
+                echo 'Updated Product: '.$product['code'].'<br>';
+            } else {
+                $res = $http->request('POST', url('/').'/api/v1/products', [
+                    'json' => $client
+                ]);
+                echo 'Created Product: '.$product['code'].'<br>';
+            }
+        }
+    }
+
+
+});
 
 
 

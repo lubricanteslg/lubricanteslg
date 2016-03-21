@@ -16,7 +16,7 @@ class ClientsController extends Controller
      */
     public function index(Request $request)
     {
-        return \App\Client::paginate($request['perPage'])->appends(['perPage' => $request['perPage']]);
+        return \App\Client::orderBy('code')->paginate($request['perPage'])->appends(['perPage' => $request['perPage']]);
     }
 
     /**
@@ -37,11 +37,12 @@ class ClientsController extends Controller
      */
     public function store(Request $request)
     {
+
         $input = $request->json()->all();
         if($this->valid($input) !== true) return $this->valid($input);
 
         $client = \App\Client::create($input);
-
+        \Log::info(['client' => $client]);
         return response()->json([
             "status" => 201,
             "statusText" => "Correctly created client with id: ".$client->id,
@@ -57,7 +58,8 @@ class ClientsController extends Controller
      */
     public function show($id, Request $req)
     {
-        $client = \App\Client::find($id);
+        if ($req['code']) $client = \App\Client::whereCode($id)->first();
+        else $client = \App\Client::find($id);
 
         if($req['orders']) $client->load('orders.detail');
         if($req['salesman']) $client->load('salesman');
@@ -89,10 +91,16 @@ class ClientsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $input = $request->json()->all();
-        if($this->valid($input, $id) !== true) return $this->valid($input, $id);
+        if ($request['cod']){
+            $client = \App\Client::whereCode($id)->first();
+            $cid = $client->id;
+        }
 
-        $client = \App\Client::find($id);
+        $input = $request->json()->all();
+        if($this->valid($input, $cid) !== true) return $this->valid($input, $cid);
+
+
+        if (!$request['cod']) $client = \App\Client::find($id);
         $client->fill($input);
 
         $client->save();
@@ -130,12 +138,14 @@ class ClientsController extends Controller
      */
     private function valid($input, $editing = false)
     {
+        $editing = intval($editing);
 
         if (!$input) {
             return abort(400, "Bad Request: Wrong body data");
         }
         $custom['business_id'] = array('required_without:id', 'min:5', 'unique:clients,business_id,'.$editing);
 
+        $custom['code'] = array('unique:clients,code,'.$editing);
         $validation = \App\Client::validate($input, $custom);
 
         if ($validation !== true)

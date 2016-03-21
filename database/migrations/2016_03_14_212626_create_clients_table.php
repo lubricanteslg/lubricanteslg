@@ -14,6 +14,7 @@ class CreateClientsTable extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('code');
             $table->string('name');
             $table->string('business_type');
             $table->string('business_id');
@@ -27,6 +28,7 @@ class CreateClientsTable extends Migration
             $table->timestamps();
 
             $table->index('business_id');
+            $table->index('code');
             $table->foreign('salesman_id')->references('id')->on('salesmen');
         });
     }

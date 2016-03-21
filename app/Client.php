@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
     use LocalDates;
-    
+
     protected $fillable = [
+        "code",
         "name",
         "business_type",
         "business_id",
@@ -30,10 +31,11 @@ class Client extends Model
     }
 
     public static $rules = array(
+                                //'code' => array('unique:clients,code'),
                                 'name' => array('required_without:id', 'min:6'),
                                 'business_type' => array('required_without:id', 'alpha', 'max:1'),
                                 'business_id' => array('required_without:id', 'min:5', 'unique:clients,business_id'),
-                                'email' => array('email'),
+                                //'email' => array('email'),
                                 'salesman_id' => array('exists:salesmen,id')
         );
 
