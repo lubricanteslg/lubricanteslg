@@ -16,6 +16,7 @@ class OrdersController extends Controller
      */
     public function index(Request $request)
     {
+        dd($request);
         return \App\Order::paginate(10);
     }
 

@@ -12,10 +12,10 @@ return [
      |
      */
     'supportsCredentials' => false,
-    'allowedOrigins' => ['*'],
-    'allowedHeaders' => ["X-Requested-With, Content-Type, Accept"],
-    'allowedMethods' => ['*'],
+    'allowedOrigins' => array('*'),
+    'allowedHeaders' => array('*'),
+    'allowedMethods' => array('*'),
     'exposedHeaders' => [],
     'maxAge' => 0,
-    'hosts' => ['http://lubricantes.app'],
+    'hosts' => [],
 ];

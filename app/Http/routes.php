@@ -62,9 +62,7 @@ Route::get('check', function() {
     dd(\Auth::check());
 });
 
-Route::post('oauth/access_token', function() {
- return \Response::json(Authorizer::issueAccessToken());
-});
+
 Route::get('api', ['before' => 'oauth', function() {
  // return the protected resource
  //echo “success authentication”;
@@ -73,7 +71,7 @@ Route::get('api', ['before' => 'oauth', function() {
     return Response::json($user);
 }]);
 
-Route::group(['prefix' => 'api/v1', 'middleware' => 'cors'], function () {
+Route::group(['prefix' => 'api/v1', /*'middleware' => 'cors'*/], function () {
     Route::resource('users', 'UsersController');
     Route::resource('clients', 'ClientsController');
     Route::resource('orders', 'OrdersController');
@@ -87,6 +85,12 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'cors'], function () {
         Route::get('logout', 'Auth\AuthController@getLogout');
 
         });
+
+    header('Access-Control-Allow-Origin: http://localhost:3000');
+    header('Access-Control-Allow-Headers: Content-Type');
+    Route::post('oauth/access_token', function() {
+     return \Response::json(Authorizer::issueAccessToken());
+    });
 });
 
 use \GuzzleHttp\Client;
