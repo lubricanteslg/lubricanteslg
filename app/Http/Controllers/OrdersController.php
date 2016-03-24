@@ -16,8 +16,11 @@ class OrdersController extends Controller
      */
     public function index(Request $request)
     {
-        dd($request);
-        return \App\Order::paginate(10);
+
+        $orders = \App\Order::paginate($request['perPage'])->appends(['perPage' => $request['perPage']]);
+        if ($request['client']) $orders->load('client');
+        if ($request['detail']) $orders->load('detail');
+        return $orders;
     }
 
     /**
@@ -38,9 +41,11 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
+        $client = \App\Client::whereCode($request['code'])->first(); //URGENT: CHANGE CLIENT_ID VALIDATION TO CODE VALIDATION
+        $request['client_id'] = $client->id;
         $input = $request->json()->all();
         if($this->valid($input) !== true) return $this->valid($input);
-
+        \Log::warning('yes');
         $order = new \App\Order;
         $order->date = $input['date'];
         $order->subtotal = $input['subtotal'];
@@ -113,6 +118,10 @@ class OrdersController extends Controller
      */
     public function update(Request $request, $id)
     {
+        /////////////////////////THIS NEEDS URGENT CLEANUP ////////////////////////////////////
+        $client = \App\Client::whereCode($request['client_id'])->first();
+        $request['client_id'] = $client->id;
+
         $order = \App\Order::with('detail')->find($id);
         $input = $request->json()->all();
 

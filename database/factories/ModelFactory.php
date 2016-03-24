@@ -23,7 +23,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 $factory->define(App\Client::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->company,
-        'code' => $faker->uuid,
+        'code' => $faker->unique()->randomNumber($nbDigits = 4),
         'business_type' => 'J',
         'business_id' => $faker->randomNumber($nbDigits = 9), // 79907610,
         'address' =>$faker->address,

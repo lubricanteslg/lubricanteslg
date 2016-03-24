@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use LocalDates;
-    
+
     public static $rules = array(
                                 'date' => array('required', 'date'),
                                 'subtotal' => array('required', 'numeric'),
                                 'tax' => array('required', 'numeric'),
                                 'total' => array('required', 'numeric'),
                                 'salesman_id' => array('required', 'exists:salesmen,id'),
-                                'client_id' => array('required', 'exists:clients,id'),
+                                'client_id' => array('required_without:id', 'exists:clients,id'),
                                 'detail' => array('array')
         );
 

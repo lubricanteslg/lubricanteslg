@@ -59,7 +59,7 @@ Route::get('users', function() {
 });
 
 Route::get('check', function() {
-    dd(\Auth::check());
+    return \App\Client::whereCode('9696')->first();
 });
 
 
@@ -88,6 +88,7 @@ Route::group(['prefix' => 'api/v1', /*'middleware' => 'cors'*/], function () {
 
     header('Access-Control-Allow-Origin: http://localhost:3000');
     header('Access-Control-Allow-Headers: Content-Type');
+    header('Access-Control-Allow-Methods: GET, POST, PUT');
     Route::post('oauth/access_token', function() {
      return \Response::json(Authorizer::issueAccessToken());
     });

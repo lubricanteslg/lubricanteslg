@@ -16,7 +16,26 @@ class ProductsController extends Controller
      */
     public function index(Request $request)
     {
-        return \App\Product::paginate($request['perPage'])->appends(['perPage' => $request['perPage']]);
+        if (isset($request['qcode']) && !isset($request['qdesc'])) {
+            $products = \App\Product::where('code', 'like', "%".$request['qcode']."%")->take(5)->get();
+            return $products;
+        }
+
+        else if (isset($request['qdesc']) && !isset($request['qcode'])) {
+            $products = \App\Product::where('description', 'like', "%".$request['qdesc']."%")->take(5)->get();;
+            return $products;
+        }
+
+        else if (isset($request['qdesc']) && isset($request['qcode']) ) {
+            $products = \App\Product::where('code', 'like', "%".$request['qcode']."%")->orWhere('description', 'like', "%".$request['qdesc']."%")->take(5)->get();
+            return $products;
+        }
+
+        else {
+            return \App\Product::paginate($request['perPage'])->appends(['perPage' => $request['perPage']]);
+        }
+
+
     }
 
     /**
