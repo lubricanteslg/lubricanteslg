@@ -20,6 +20,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
+
 $factory->define(App\Client::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->company,
@@ -35,6 +36,7 @@ $factory->define(App\Client::class, function (Faker\Generator $faker) {
         'last_order' => $faker->date
     ];
 });
+
 
 $factory->define(App\Order::class, function (Faker\Generator $faker) {
     return [
@@ -60,6 +62,7 @@ $factory->define(App\OrderDetail::class, function (Faker\Generator $faker) {
 
     ];
 });
+
 
 $factory->define(App\Product::class, function (Faker\Generator $faker) {
     return [

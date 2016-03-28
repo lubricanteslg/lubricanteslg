@@ -22,9 +22,10 @@ class Product extends \Eloquent
                                 'department_id' => array('exists:departments,id'),
         );
 
-    public static function validate($input)
+    public static function validate($input, $custom)
     {
-        $v = \Validator::make($input, static::$rules);
+        $rules = array_merge(static::$rules,$custom);
+        $v = \Validator::make($input, $rules);
 
         return $v->fails()
                 ? $v

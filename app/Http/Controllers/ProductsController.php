@@ -108,10 +108,15 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $input = $request->json()->all();
-        if($this->valid($input) !== true) return $this->valid($input);
+        if ($request['cod']){
+            $product = \App\Product::whereCode($id)->first();
+            $cid = $product->id;
+        }
 
-        $product = \App\Product::find($id);
+        $input = $request->json()->all();
+        if($this->valid($input, $cid) !== true) return $this->valid($input, $cid);
+
+        if (!$request['cod']) $product = \App\Product::find($id);
         $product->fill($input);
 
         $product->save();
@@ -154,7 +159,8 @@ class ProductsController extends Controller
             return abort(400, "Bad Request: Wrong body data");
         }
 
-        $validation = \App\Product::validate($input);
+        $custom['code'] = array('unique:products,code,'.$editing);
+        $validation = \App\Product::validate($input, $custom);
 
         if ($validation !== true)
             return response()->json([

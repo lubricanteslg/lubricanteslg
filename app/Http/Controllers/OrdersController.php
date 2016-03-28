@@ -41,9 +41,12 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
+
         $client = \App\Client::whereCode($request['code'])->first(); //URGENT: CHANGE CLIENT_ID VALIDATION TO CODE VALIDATION
         $request['client_id'] = $client->id;
+
         $input = $request->json()->all();
+
         if($this->valid($input) !== true) return $this->valid($input);
         \Log::warning('yes');
         $order = new \App\Order;
@@ -191,11 +194,17 @@ class OrdersController extends Controller
         if (!$editing) $validation = \App\Order::validate($input);
         $validateDetails = \App\OrderDetail::validateMany($input['detail']);
 
-        if ($validation !== true)
+        if ($validation !== true) {
+            \Log::warning($validation->messages());
             return response()->json($validation->messages(), 400);
+        }
 
-        if($validateDetails !== true)
+
+        if($validateDetails !== true) {
+            \Log::warning($validateDetails->messages());
             return response()->json($validateDetails->messages(), 400);
+        }
+
 
         else
             return true;

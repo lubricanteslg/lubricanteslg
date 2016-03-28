@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class OrderDetail extends Model
 {
     use LocalDates;
-    
+
     protected $fillable = ['order_id', 'qty', 'product_code', 'product_desc', 'price'];
 
     public static $rules = array(
                                 'product_code' => array('required', 'exists:products,code'),
-                                'product_desc' => array('required', 'alpha_num'),
+                                'product_desc' => array('required'),
                                 'qty' => array('required', 'integer'),
                                 'price' => array('required', 'numeric'),
         );

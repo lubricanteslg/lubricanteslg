@@ -140,7 +140,68 @@ Route::get('/fetchclients', function () {
 
 Route::get('/fetchproducts', function () {
     setlocale(LC_ALL, 'es_ES');
-    $file = fopen(storage_path()."/app/products.csv", "r+");
+    $file = fopen(storage_path()."/app/precios.csv", "r+");
+
+    $i = 0;
+    $headers = fgetcsv($file, $delimiter = ',');
+	while(!feof($file))
+ 	{
+		$line = fgetcsv($file, $delimiter = ',');
+
+		    for ($j = 0; $j <= count($line)-2; $j++) {
+		    	if($j != 7) {
+		    		if ($headers[$j] === "price") {
+		    			$value = intval(trim(str_replace('.','',$line[$j])));
+		    			$result[$i][$headers[$j]] = round($value/100,2);
+		    		}
+
+                    else if ($headers[$j] === "stock") {
+		    			$value = intval(trim(str_replace('.','',$line[$j])));
+		    			$result[$i][$headers[$j]] = $value;
+		    		}
+
+                    else if($headers[$j] === "department_id") {
+                        $result[$i][$headers[$j]] = intval($line[$j]);
+                    }
+
+		    		else {
+		    			$result[$i][$headers[$j]] = trim($line[$j]);
+		    		}
+
+		    	}
+
+		    }
+
+
+		$i++;
+  	}
+    $http = new Client();
+    fclose($file);
+
+    foreach($result as $key=>$product) {
+        if(isset($product['code'])){
+            $verify = \App\Product::whereCode($product['code'])->first();
+            if ($verify) {
+                $product['cod'] = true;
+                $res = $http->request('PUT', url('/').'/api/v1/products/'.$product['code'], [
+                    'json' => $product
+                ]);
+                echo 'Updated Product: '.$product['code'].'<br>';
+            } else {
+                $res = $http->request('POST', url('/').'/api/v1/products', [
+                    'json' => $product
+                ]);
+                echo 'Created Product: '.$product['code'].'<br>';
+            }
+        }
+    }
+
+
+});
+
+Route::get('/fetchdepartments', function () {
+    setlocale(LC_ALL, 'es_ES');
+    $file = fopen(storage_path()."/app/departments.csv", "r+");
 
     $i = 0;
     $headers = fgetcsv($file, $delimiter = ',');
@@ -159,21 +220,12 @@ Route::get('/fetchproducts', function () {
     $http = new Client();
     fclose($file);
 
-    foreach($result as $key=>$product) {
-        if(isset($client['name'])){
-            $verify = \App\Product::whereCode($produt['code'])->first();
-            if ($verify) {
-                $product['cod'] = true;
-                $res = $http->request('PUT', url('/').'/api/v1/products/'.$product['code'], [
-                    'json' => $product
-                ]);
-                echo 'Updated Product: '.$product['code'].'<br>';
-            } else {
-                $res = $http->request('POST', url('/').'/api/v1/products', [
-                    'json' => $client
-                ]);
-                echo 'Created Product: '.$product['code'].'<br>';
-            }
+    foreach($result as $key=>$department) {
+        if(isset($department['description'])){
+            DB::table('departments')->insert([
+                'id' => intval($department['id']),
+                'description' => $department['description'],
+            ]);
         }
     }
 
