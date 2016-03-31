@@ -60,7 +60,7 @@ class Handler extends ExceptionHandler
             }
 
             // Default response of 400
-            $status['statusCode'] = 400;
+            $status['statusCode'] = 500;
             $status['statusText'] = $e->getMessage();
 
             // If this exception is an instance of HttpException
@@ -72,7 +72,7 @@ class Handler extends ExceptionHandler
             }
 
             // Return a JSON response with the response array and status code
-            return response()->json($status);
+            return response()->json($status, $status['statusCode']);
         }
 
         return parent::render($request, $e);

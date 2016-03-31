@@ -77,7 +77,7 @@ class OrdersController extends Controller
         $order->detail = $det;
 
         return response()->json([
-            "status" => 201,
+            "statusCode" => 201,
             "statusText" => "Correctly Created Order With Id: ".$order->id,
             "order" => $order,
         ], 201);
@@ -122,13 +122,11 @@ class OrdersController extends Controller
     public function update(Request $request, $id)
     {
         /////////////////////////THIS NEEDS URGENT CLEANUP ////////////////////////////////////
-        $client = \App\Client::whereCode($request['client_id'])->first();
-        $request['client_id'] = $client->id;
 
-        $order = \App\Order::with('detail')->find($id);
+        $order = \App\Order::with('detail')->findOrFail($id);
         $input = $request->json()->all();
 
-        if($this->valid($input) !== true) return $this->valid($input);
+        if($this->valid($input, true) !== true) return $this->valid($input, true);
 
         foreach($order->detail as $key=>$detail) {
             $detail->delete();
@@ -154,7 +152,7 @@ class OrdersController extends Controller
         $order = \App\Order::with('detail')->find($id); //Delete this soon.
 
         return response()->json([
-            "status" => 200,
+            "statusCode" => 200,
             "statusText" => "OK: Correctly modified Order With Id: ".$order->id,
             "order" => $order,
         ], 200);
@@ -170,7 +168,7 @@ class OrdersController extends Controller
     {
         if(\App\Order::destroy($id))
             return response()->json([
-                "status" => 200,
+                "statusCode" => 200,
                 "statusText" => "OK: Correctly Deleted The Selected Order",
             ], 200);
         else
@@ -194,7 +192,7 @@ class OrdersController extends Controller
         if (!$editing) $validation = \App\Order::validate($input);
         $validateDetails = \App\OrderDetail::validateMany($input['detail']);
 
-        if ($validation !== true) {
+        if (!$editing && $validation !== true) {
             \Log::warning($validation->messages());
             return response()->json($validation->messages(), 400);
         }
