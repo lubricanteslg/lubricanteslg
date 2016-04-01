@@ -52,8 +52,8 @@ class OrdersController extends Controller
         $order = new \App\Order;
         $order->date = $input['date'];
         $order->subtotal = $input['subtotal'];
-        $order->tax = $input['tax'];
-        $order->total = $input['total'];
+        $order->tax = round($input['tax']*100,2)/100;
+        $order->total = $order->subtotal + $order->tax;
         $order->lines = count($input['detail']);
         $order->salesman_id = $input['salesman_id'];
         $order->client_id = $input['client_id'];
