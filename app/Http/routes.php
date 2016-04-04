@@ -73,10 +73,12 @@ Route::get('api', ['before' => 'oauth', function() {
 
 Route::group(['prefix' => 'api/v1', /*'middleware' => 'cors'*/], function () {
     Route::resource('users', 'UsersController');
-    Route::resource('clients', 'ClientsController');
+
+
 
     Route::group(['before' => 'oauth'], function() {
         Route::resource('orders', 'OrdersController');
+        Route::resource('clients', 'ClientsController');
     });
 
     Route::resource('products', 'ProductsController');

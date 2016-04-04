@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use LucaDegasperi\OAuth2Server\Facades\AuthorizerFacade as Authorizer;
 
 class OrdersController extends Controller
 {
@@ -16,8 +17,14 @@ class OrdersController extends Controller
      */
     public function index(Request $request)
     {
+        if ($salesman = \App\Salesman::whereUser_id(Authorizer::getResourceOwnerId())->first()) {
+            $orders = \App\Order::whereSalesman_id($salesman->id)
+                    ->paginate($request['perPage'])
+                    ->appends(['perPage' => $request['perPage']]);
+        } else {
+            $orders = \App\Order::paginate($request['perPage'])->appends(['perPage' => $request['perPage']]);
+        }
 
-        $orders = \App\Order::paginate($request['perPage'])->appends(['perPage' => $request['perPage']]);
         if ($request['client']) $orders->load('client');
         if ($request['detail']) $orders->load('detail');
         return $orders;
@@ -91,7 +98,13 @@ class OrdersController extends Controller
      */
     public function show($id, Request $req)
     {
-        $order = \App\Order::find($id);
+
+        if ($salesman = \App\Salesman::whereUser_id(Authorizer::getResourceOwnerId())->first()) {
+            $order = \App\Order::whereIdAndSalesman_id($id, $salesman_id)->get();
+        } else {
+            $order = \App\Order::find($id);
+        }
+
         if(!$order)
             abort(404, 'Not Found');
         else
