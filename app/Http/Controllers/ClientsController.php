@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use LucaDegasperi\OAuth2Server\Facades\AuthorizerFacade as Authorizer;
 
 class ClientsController extends Controller
 {
@@ -58,7 +59,9 @@ class ClientsController extends Controller
      */
     public function show($id, Request $req)
     {
-        if ($req['code']) $client = \App\Client::whereCode($id)->first();
+        $salesman = \App\Salesman::whereUser_id(Authorizer::getResourceOwnerId())->first();
+
+        if ($req['code']) $client = \App\Client::whereCodeAndSalesman_id($id, $salesman->id)->first();
         else $client = \App\Client::find($id);
 
         if($req['orders']) $client->load('orders.detail');
