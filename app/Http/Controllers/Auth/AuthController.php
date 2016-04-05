@@ -35,6 +35,34 @@ class AuthController extends Controller
     }
 
     /**
+     * Get the authenticated user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getUser(Request $request)
+    {
+        $user_id=\Authorizer::getResourceOwnerId(); // the token user_id
+        $user=\App\User::find($user_id);// get the user data from database
+        if ($request['salesman']) $user->load('salesman');
+
+        return \Response::json($user);
+    }
+
+    /**
+     * Logout from the current session (Expires token).
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function apiLogout(Request $request)
+    {
+        \Authorizer::getChecker()->getAccessToken()->expire();
+
+        return \Response::json(['statusCode' => 200, 'statusText' => 'Correctly Logged Out'], 200);
+    }
+
+    /**
      * Handle a registration request for the application.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -47,7 +75,7 @@ class AuthController extends Controller
 
         \Auth::login($this->create($request->all()));
 
-        if ($request->wantsJson()) 
+        if ($request->wantsJson())
             return response()->json([
                 "status" => 200,
                 "statusText" => "OK: Succesfully created and logged in",

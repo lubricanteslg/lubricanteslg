@@ -54,8 +54,10 @@ Route::get('/pdv', function () {
 
 
 
-Route::get('users', function() {
-    return \App\User::paginate();
+Route::get('users', function(Illuminate\Http\Request $request) {
+    $users = \App\User::paginate();
+    if ($request['salesman']) $users->load('salesman');
+    return $users;
 });
 
 Route::get('check', function() {
@@ -63,11 +65,11 @@ Route::get('check', function() {
 });
 
 
-Route::get('api', ['before' => 'oauth', function() {
+Route::get('api', ['before' => 'oauth', function(Authorizer $auth) {
  // return the protected resource
  //echo “success authentication”;
-     $user_id=Authorizer::getResourceOwnerId(); // the token user_id
-     $user=\App\User::find($user_id);// get the user data from database
+
+    dd(Authorizer::getChecker()->getAccessToken()->expire());
     return Response::json($user);
 }]);
 
@@ -79,6 +81,8 @@ Route::group(['prefix' => 'api/v1', /*'middleware' => 'cors'*/], function () {
     Route::group(['before' => 'oauth'], function() {
         Route::resource('orders', 'OrdersController');
         Route::resource('clients', 'ClientsController');
+        Route::get('auth/user', 'Auth\AuthController@getUser');
+        Route::get('auth/apilogout', 'Auth\AuthController@apiLogout');
     });
 
     Route::resource('products', 'ProductsController');
@@ -89,6 +93,8 @@ Route::group(['prefix' => 'api/v1', /*'middleware' => 'cors'*/], function () {
         Route::post('register', 'Auth\AuthController@postRegister');
         Route::post('login', 'Auth\AuthController@postLogin');
         Route::get('logout', 'Auth\AuthController@getLogout');
+
+
 
         });
 

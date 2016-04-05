@@ -100,7 +100,7 @@ class OrdersController extends Controller
     {
 
         if ($salesman = \App\Salesman::whereUser_id(Authorizer::getResourceOwnerId())->first()) {
-            $order = \App\Order::whereIdAndSalesman_id($id, $salesman_id)->get();
+            $order = \App\Order::whereIdAndSalesman_id($id, $salesman->id)->first();
         } else {
             $order = \App\Order::find($id);
         }

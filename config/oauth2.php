@@ -34,7 +34,7 @@ return [
     'grant_types' => [
         'password' => [
          'class' => 'League\OAuth2\Server\Grant\PasswordGrant',
-         'access_token_ttl' => 604800,
+         'access_token_ttl' => 86400,
 
          // the code to run in order to verify the user’s identity
          'callback' => function($username, $password){
