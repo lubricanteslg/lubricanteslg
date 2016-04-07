@@ -18,11 +18,11 @@ class OrdersController extends Controller
     public function index(Request $request)
     {
         if ($salesman = \App\Salesman::whereUser_id(Authorizer::getResourceOwnerId())->first()) {
-            $orders = \App\Order::whereSalesman_id($salesman->id)
+            $orders = \App\Order::orderBy('date', 'DESC')->whereSalesman_id($salesman->id)
                     ->paginate($request['perPage'])
                     ->appends(['perPage' => $request['perPage']]);
         } else {
-            $orders = \App\Order::paginate($request['perPage'])->appends(['perPage' => $request['perPage']]);
+            $orders = \App\Order::orderBy('date', 'DESC')->paginate($request['perPage'])->appends(['perPage' => $request['perPage']]);
         }
 
         if ($request['client']) $orders->load('client');
@@ -57,7 +57,7 @@ class OrdersController extends Controller
         if($this->valid($input) !== true) return $this->valid($input);
         \Log::warning('yes');
         $order = new \App\Order;
-        $order->date = $input['date'];
+        $order->date = \Carbon\Carbon::now()->format('Y-m-d');
         $order->subtotal = $input['subtotal'];
         $order->tax = round($input['tax']*100,2)/100;
         $order->total = $order->subtotal + $order->tax;
