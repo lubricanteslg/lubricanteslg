@@ -14,10 +14,10 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-        factory(App\User::class, 4)->create();
+        //factory(App\User::class, 4)->create();
         //factory(App\Client::class, 9)->create();
-        factory(App\Order::class, 10)->create();
-        factory(App\OrderDetail::class, 60)->create();
+        //factory(App\Order::class, 10)->create();
+        //factory(App\OrderDetail::class, 60)->create();
         //factory(App\Product::class, 200)->create();
 
         DB::table('oauth_clients')->insert([
@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'email' => 'ramonlv93@gmail.com',
             'name' => 'ramon',
-            'password' => bcrypt('neronado123');
+            'password' => bcrypt('neronado123')
         ]);
 
         DB::table('salesmen')->insert([

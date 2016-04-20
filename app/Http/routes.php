@@ -77,10 +77,10 @@ Route::group(['prefix' => 'api/v1', /*'middleware' => 'cors'*/], function () {
     Route::resource('users', 'UsersController');
 
 
-
+    Route::resource('clients', 'ClientsController');
     Route::group(['before' => 'oauth'], function() {
         Route::resource('orders', 'OrdersController');
-        Route::resource('clients', 'ClientsController');
+
         Route::get('auth/user', 'Auth\AuthController@getUser');
         Route::get('auth/apilogout', 'Auth\AuthController@apiLogout');
     });
@@ -98,7 +98,7 @@ Route::group(['prefix' => 'api/v1', /*'middleware' => 'cors'*/], function () {
 
         });
 
-    header('Access-Control-Allow-Origin: http://localhost:3000');
+    header('Access-Control-Allow-Origin: *');
     header('Access-Control-Allow-Headers: Content-Type, Authorization');
     header('Access-Control-Allow-Methods: GET, POST, PUT');
     Route::post('oauth/access_token', function() {

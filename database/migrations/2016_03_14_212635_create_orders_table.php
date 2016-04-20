@@ -21,6 +21,7 @@ class CreateOrdersTable extends Migration
             $table->decimal('tax',12, 2);
             $table->decimal('total',12, 2);
             $table->integer('salesman_id')->unsigned();
+            $table->boolean('processed');
             $table->timestamps();
 
 

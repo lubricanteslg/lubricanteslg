@@ -20,8 +20,9 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-
+/*
 $factory->define(App\Client::class, function (Faker\Generator $faker) {
+
     return [
         'name' => $faker->company,
         'code' => $faker->unique()->randomNumber($nbDigits = 4),
@@ -36,13 +37,14 @@ $factory->define(App\Client::class, function (Faker\Generator $faker) {
         'last_order' => $faker->date
     ];
 });
-
+*/
 
 $factory->define(App\Order::class, function (Faker\Generator $faker) {
+    $clients = \DB::table('clients')->lists('id');
     return [
             'date' => $faker->date,
-            'client_id' => $faker->randomNumber($nbDigits = 1),
-            'lines' => $faker->randomNumber($nbDigits = 1),
+            'client_id' => $faker->randomElement($clients),
+            'lines' => $faker->unique()->randomNumber($nbDigits = 1),
             'subtotal' => $faker->randomNumber($nbDigits = 5),
             'tax' => $faker->randomNumber($nbDigits = 3),
             'total' => $faker->randomNumber($nbDigits = 5),
@@ -52,10 +54,13 @@ $factory->define(App\Order::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\OrderDetail::class, function (Faker\Generator $faker) {
+    $products = \DB::table('products')->lists('id');
+    $desc = \DB::table('products')->lists('description');
+    $orders = \DB::table('orders')->lists('id');
     return [
-             'order_id' => $faker->randomNumber($nbDigits = 1),
-             'product_code' => $faker->uuid,
-             'product_desc' => $faker->colorName,
+             'order_id' => $faker->randomElement($orders),
+             'product_code' => $faker->randomElement($products),
+             'product_desc' => $faker->randomElement($desc),
              'line' => $faker->randomNumber($nbDigits = 1),
              'qty' => $faker->randomNumber($nbDigits = 1),
              'price' => $faker->randomNumber($nbDigits = 5)

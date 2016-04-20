@@ -80,7 +80,8 @@ class OrdersController extends Controller
 
             $det[$key] = $orderDetail;
         }
-
+        $client->last_order = \Carbon\Carbon::now()->format('Y-m-d');
+        $client->save();
         $order->detail = $det;
 
         return response()->json([
