@@ -14,7 +14,7 @@ class DataSeeder extends Seeder
     {
         Model::unguard();
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-        factory(App\User::class, 4)->create();
+        //factory(App\User::class, 4)->create();
         //factory(App\Client::class, 9)->create();
         factory(App\Order::class, 10)->create();
         factory(App\OrderDetail::class, 60)->create();

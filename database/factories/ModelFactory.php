@@ -68,7 +68,7 @@ $factory->define(App\OrderDetail::class, function (Faker\Generator $faker) {
     ];
 });
 
-
+/*
 $factory->define(App\Product::class, function (Faker\Generator $faker) {
     return [
              'code' => $faker->unique()->randomNumber($nbDigits = 4),
@@ -82,3 +82,4 @@ $factory->define(App\Product::class, function (Faker\Generator $faker) {
 
     ];
 });
+*/
