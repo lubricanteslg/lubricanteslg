@@ -14,21 +14,21 @@ class CreateClientsTable extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('code');
+            $table->string('code', 10);
             $table->string('name');
-            $table->string('business_type');
+            $table->string('business_type', 2);
             $table->string('business_id');
             $table->string('address');
-            $table->string('phone');
-            $table->string('email');
-            $table->string('zone');
-            $table->string('zone2');
+            $table->string('phone', 50);
+            $table->string('email')->nullable();
+            $table->string('zone_code', 10);
             $table->integer('salesman_id')->unsigned();
-            $table->date('last_order');
+            $table->date('last_order')->nullable();
             $table->timestamps();
 
             $table->index('business_id');
             $table->index('code');
+            $table->foreign('zone_code')->references('code')->on('zones');
             $table->foreign('salesman_id')->references('id')->on('salesmen');
         });
     }

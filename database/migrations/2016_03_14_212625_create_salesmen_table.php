@@ -14,11 +14,12 @@ class CreateSalesmenTable extends Migration
     {
          Schema::create('salesmen', function (Blueprint $table) {
              $table->increments('id');
+             $table->string('code')->unique();
              $table->integer('user_id')->unsigned();
-             $table->string('name');
-             $table->string('phone');
-             $table->string('email');
-             $table->string('zone');
+             $table->string('name', 20);
+             $table->string('phone', 20);
+             $table->string('email', 100);
+             $table->string('zone_code', 10);
              $table->date('last_order');
 
              $table->foreign('user_id')->references('id')->on('users');
