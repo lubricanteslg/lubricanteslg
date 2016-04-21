@@ -54,7 +54,7 @@ $factory->define(App\Order::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\OrderDetail::class, function (Faker\Generator $faker) {
-    $products = \DB::table('products')->lists('id');
+    $products = \DB::table('products')->lists('code');
     $desc = \DB::table('products')->lists('description');
     $orders = \DB::table('orders')->lists('id');
     return [
