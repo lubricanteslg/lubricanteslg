@@ -49,4 +49,8 @@ class Client extends Model
                 : true;
     }
 
+    public function getRifAttribute() {
+        return $this->business_type.$this->business_id;
+    }
+
 }

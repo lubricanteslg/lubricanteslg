@@ -38,4 +38,13 @@ class OrderDetail extends Model
     public function order() {
         return $this->belongsTo('App\Order');
     }
+
+    public function getSubtotalAttribute() {
+        return number_format(round($this->price*$this->qty*100,2)/100,2, ',', '.');
+    }
+
+    public function getUnitarioAttribute() {
+        return number_format($this->price,2, ',', '.');
+    }
+
 }

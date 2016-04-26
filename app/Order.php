@@ -38,4 +38,15 @@ class Order extends Model
     public function salesman() {
         return $this->belongsTo('App\Salesman');
     }
+
+    public function getPdf() {
+        $pdf = new \mPDF();
+        if (!$this->detail) $this->load('detail');
+        if (!$this->salesman) $this->load('salesman');
+        if (!$this->client) $this->load('client');
+
+        $pdf->writeHTML(view('pdf.pedido')->with('order', $this)->render());
+
+        return $pdf;
+    }
 }

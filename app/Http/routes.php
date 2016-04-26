@@ -61,7 +61,8 @@ Route::get('users', function(Illuminate\Http\Request $request) {
 });
 
 Route::get('check', function() {
-    return \App\Client::whereCode('9696')->first();
+    $order = \App\Order::find(63);
+    return $order->getPDF()->output();
 });
 
 
