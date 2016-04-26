@@ -11,8 +11,8 @@ trait LocalDates
     {
         return \Carbon\Carbon::parse($value)->timezone('America/Caracas')->toDateTimeString();
     }
-    public function getDateAttribute($value)
+    public function getVedateAttribute($value)
     {
-        return \Carbon\Carbon::parse($value)->timezone('America/Caracas')->format('d/m/Y');
+        return \Carbon\Carbon::parse($value)->timezone('America/Caracas')->format('d-m-Y');
     }
 }

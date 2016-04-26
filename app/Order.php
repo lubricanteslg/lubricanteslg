@@ -38,7 +38,10 @@ class Order extends Model
     public function salesman() {
         return $this->belongsTo('App\Salesman');
     }
-
+    public function getFileName() {
+        $name = $this->client->business_type.$this->client->business_id.'-'.$this->id;
+        return storage_path().'/app/'.$name.'.pdf';
+    }
     public function getPdf() {
         $pdf = new \mPDF();
         if (!$this->detail) $this->load('detail');

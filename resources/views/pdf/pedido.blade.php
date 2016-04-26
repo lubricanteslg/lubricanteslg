@@ -100,7 +100,7 @@
 
   <div class="dateOrder">
   <p>
-    Fecha: {{$order->date}} <br />
+    Fecha: {{$order->vedate}} <br />
     N° Pedido: {{$order->id}}
   </p>
   </div>

@@ -18,11 +18,11 @@ class OrdersController extends Controller
     public function index(Request $request)
     {
         if ($salesman = \App\Salesman::whereUser_id(Authorizer::getResourceOwnerId())->first()) {
-            $orders = \App\Order::orderBy('date', 'DESC')->whereSalesman_id($salesman->id)
+            $orders = \App\Order::orderBy('date', 'DESC')->orderBy('id', 'desc')->whereSalesman_id($salesman->id)
                     ->paginate($request['perPage'])
                     ->appends(['perPage' => $request['perPage']]);
         } else {
-            $orders = \App\Order::orderBy('date', 'DESC')->paginate($request['perPage'])->appends(['perPage' => $request['perPage']]);
+            $orders = \App\Order::orderBy('date', 'DESC')->orderBy('id', 'desc')->paginate($request['perPage'])->appends(['perPage' => $request['perPage']]);
         }
 
         if ($request['client']) $orders->load('client');
@@ -83,6 +83,16 @@ class OrdersController extends Controller
         $client->last_order = \Carbon\Carbon::now()->format('Y-m-d');
         $client->save();
         $order->detail = $det;
+        $order->getPDF()->output($order->getFileName());
+
+        $mail = \Mail::send('emails.order', ['order' => $order], function ($m) use ($order) {
+                $m->from('webadmin@diluga.com.ve', 'Ventas DILUGA');
+                $m->replyTo(['facturacion.arnardo@diluga.com.ve', 'facturacion.consejo@diluga.com.ve'], ['Arnardo Martínez', 'Consejo Requena']);
+
+                $m->to('webadmin@diluga.com.ve', 'Web Admin')->subject('Pedido Número: '.$order->id);
+                $m->cc('ramonlv93@gmail.com');
+                $m->attach($order->getFileName());
+        });
 
         return response()->json([
             "statusCode" => 201,
