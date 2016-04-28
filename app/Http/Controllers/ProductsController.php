@@ -16,6 +16,22 @@ class ProductsController extends Controller
      */
     public function index(Request $request)
     {
+        $lubricantes = filter_var($request['lubricantes'], FILTER_VALIDATE_BOOLEAN);
+        if ($lubricantes == true) {
+            $products = \App\Product::
+            where(function($query) use ($request) {
+                $query->where('code', 'like', "%".$request['qcode']."%")
+                ->orWhere('description', 'like', "%".$request['qdesc']."%");
+            })
+            ->where('code','>','0001')
+            ->where('code','<', '0799')
+            ->take(5)->get();
+
+            return $products;
+        }
+
+
+
         if (isset($request['qcode']) && !isset($request['qdesc'])) {
             $products = \App\Product::where('code', 'like', "%".$request['qcode']."%")->take(5)->get();
             return $products;
@@ -26,7 +42,7 @@ class ProductsController extends Controller
             return $products;
         }
 
-        else if (isset($request['qdesc']) && isset($request['qcode']) ) {
+        else if (isset($request['qdesc']) && isset($request['qcode'])) {
             $products = \App\Product::where('code', 'like', "%".$request['qcode']."%")->orWhere('description', 'like', "%".$request['qdesc']."%")->take(5)->get();
             return $products;
         }
