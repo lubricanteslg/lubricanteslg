@@ -87,6 +87,7 @@ Route::group(['prefix' => 'api/v1', /*'middleware' => 'cors'*/], function () {
     });
 
     Route::resource('products', 'ProductsController');
+    Route::get('departments', 'ProductsController@getDepartments');
     Route::resource('salesmen', 'SalesmenController');
 
     Route::group(['prefix' => 'auth', /*'middleware' => 'auth'*/], function () {

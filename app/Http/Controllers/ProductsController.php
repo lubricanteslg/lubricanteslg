@@ -162,6 +162,12 @@ class ProductsController extends Controller
             abort(400, "Bad Request");
     }
 
+    public function getDepartments() {
+        $departments = \DB::SELECT('SELECT id, description FROM departments');
+
+        return $departments;
+    }
+
     /**
      * Validate the user input and abort the request if it's invalid.
      *
