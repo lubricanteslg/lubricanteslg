@@ -23,20 +23,6 @@ Route::get('/contacto', function () {
     return view('contacto');
 });
 
-Route::post('/contacto', function () {
-	$request = Request::all();
-  $data['body'] = $request;
-	$mail = Mail::send('emails.test', $data, function ($m) use ($request) {
-            $m->from('webadmin@diluga.com.ve', 'Web Admin');
-            $m->replyTo($request['email'], $request['name']);
-
-            $m->to('webadmin@diluga.com.ve', 'Web Admin')->subject($request['subject']);
-            $m->cc('ramonlv93@gmail.com');
-    });
-    return redirect('/');
-});
-
-
 Route::get('/filtros', function () {
     return view('filtros');
 });
@@ -49,9 +35,18 @@ Route::get('/pdv', function () {
     return view('pdv');
 });
 
+Route::post('/contacto', function () {
+    $request = Request::all();
+    $data['body'] = $request;
+    $mail = Mail::send('emails.test', $data, function ($m) use ($request) {
+            $m->from('webadmin@diluga.com.ve', 'Web Admin');
+            $m->replyTo($request['email'], $request['name']);
 
-
-
+            $m->to('webadmin@diluga.com.ve', 'Web Admin')->subject($request['subject']);
+            $m->cc('ramonlv93@gmail.com');
+    });
+    return redirect('/');
+});
 
 
 Route::get('users', function(Illuminate\Http\Request $request) {
@@ -66,19 +61,19 @@ Route::get('check', function() {
 });
 
 
-Route::get('api', ['before' => 'oauth', function(Authorizer $auth) {
- // return the protected resource
- //echo “success authentication”;
-
-    dd(Authorizer::getChecker()->getAccessToken()->expire());
-    return Response::json($user);
-}]);
-
+/*
+|--------------------------------------------------------------------------
+| API V1 for Salesforce App using MySQL-DBisam bridge
+|--------------------------------------------------------------------------
+|
+| These are all the routes for the api including auth and endpoints
+| for accesing the various resources such as clients, products,
+| departments, etc...
+|
+*/
 Route::group(['prefix' => 'api/v1', /*'middleware' => 'cors'*/], function () {
-    Route::resource('users', 'UsersController');
-
-
-
+    
+    // Routes protected with oAuth 2
     Route::group(['before' => 'oauth'], function() {
         Route::resource('orders', 'OrdersController');
         Route::resource('clients', 'ClientsController');
@@ -86,165 +81,35 @@ Route::group(['prefix' => 'api/v1', /*'middleware' => 'cors'*/], function () {
         Route::get('auth/apilogout', 'Auth\AuthController@apiLogout');
     });
 
+    //Unprotected routes for developing purposes.
+    Route::resource('users', 'UsersController');
     Route::resource('products', 'ProductsController');
     Route::get('departments', 'ProductsController@getDepartments');
     Route::resource('salesmen', 'SalesmenController');
 
+
+
+    //Routes protected with normal browser authentication
     Route::group(['prefix' => 'auth', /*'middleware' => 'auth'*/], function () {
         Route::get('register', 'Auth\AuthController@getRegister');
         Route::post('register', 'Auth\AuthController@postRegister');
         Route::post('login', 'Auth\AuthController@postLogin');
         Route::get('logout', 'Auth\AuthController@getLogout');
+    });
 
 
-
-        });
-
+    //!!!! Hard Coded Fix for cross origin requests, this needs to go away !!!!!//
     header('Access-Control-Allow-Origin: *');
     header('Access-Control-Allow-Headers: Content-Type, Authorization');
     header('Access-Control-Allow-Methods: GET, POST, PUT');
+
+    // Obtain Valid Access Token
     Route::post('oauth/access_token', function() {
      return \Response::json(Authorizer::issueAccessToken());
     });
 });
 
-use \GuzzleHttp\Client;
 
-Route::get('/fetchclients', function () {
-    setlocale(LC_ALL, 'es_ES');
-    $file = fopen(storage_path()."/app/clients.csv", "r+");
-
-    $i = 0;
-    $headers = fgetcsv($file, $delimiter = ',');
-    $result;
-    while(!feof($file))
-    {
-        $line = fgetcsv($file, $delimiter = ',');
-
-            for ($j = 0; $j <= count($line)-1; $j++) {
-                $result[$i][$headers[$j]] = utf8_encode($line[$j]);
-            }
-
-
-        $i++;
-    }
-    $http = new Client();
-    fclose($file);
-
-    foreach($result as $key=>$client) {
-        if(isset($client['name'])){
-            $verify = \App\Client::whereCode($client['code'])->first();
-            if ($verify) {
-                $client['cod'] = true;
-                $res = $http->request('PUT', url('/').'/api/v1/clients/'.$client['code'], [
-                    'json' => $client
-                ]);
-                echo 'Updated Client: '.$client['code'].'<br>';
-            } else {
-                $res = $http->request('POST', url('/').'/api/v1/clients', [
-                    'json' => $client
-                ]);
-                echo 'Created Client: '.$client['code'].'<br>';
-            }
-        }
-    }
-
-
-});
-
-Route::get('/fetchproducts', function () {
-    setlocale(LC_ALL, 'es_ES');
-    $file = fopen(storage_path()."/app/precios.csv", "r+");
-
-    $i = 0;
-    $headers = fgetcsv($file, $delimiter = ',');
-	while(!feof($file))
- 	{
-		$line = fgetcsv($file, $delimiter = ',');
-
-		    for ($j = 0; $j <= count($line)-2; $j++) {
-		    	if($j != 7) {
-		    		if ($headers[$j] === "price") {
-		    			$value = intval(trim(str_replace('.','',$line[$j])));
-		    			$result[$i][$headers[$j]] = round($value/100,2);
-		    		}
-
-                    else if ($headers[$j] === "stock") {
-		    			$value = intval(trim(str_replace('.','',$line[$j])));
-		    			$result[$i][$headers[$j]] = $value;
-		    		}
-
-                    else if($headers[$j] === "department_id") {
-                        $result[$i][$headers[$j]] = intval($line[$j]);
-                    }
-
-		    		else {
-		    			$result[$i][$headers[$j]] = trim($line[$j]);
-		    		}
-
-		    	}
-
-		    }
-
-
-		$i++;
-  	}
-    $http = new Client();
-    fclose($file);
-
-    foreach($result as $key=>$product) {
-        if(isset($product['code'])){
-            $verify = \App\Product::whereCode($product['code'])->first();
-            if ($verify) {
-                $product['cod'] = true;
-                $res = $http->request('PUT', url('/').'/api/v1/products/'.$product['code'], [
-                    'json' => $product
-                ]);
-                echo 'Updated Product: '.$product['code'].'<br>';
-            } else {
-                $res = $http->request('POST', url('/').'/api/v1/products', [
-                    'json' => $product
-                ]);
-                echo 'Created Product: '.$product['code'].'<br>';
-            }
-        }
-    }
-
-
-});
-
-Route::get('/fetchdepartments', function () {
-    setlocale(LC_ALL, 'es_ES');
-    $file = fopen(storage_path()."/app/departments.csv", "r+");
-
-    $i = 0;
-    $headers = fgetcsv($file, $delimiter = ',');
-    $result;
-    while(!feof($file))
-    {
-        $line = fgetcsv($file, $delimiter = ',');
-
-            for ($j = 0; $j <= count($line)-1; $j++) {
-                $result[$i][$headers[$j]] = utf8_encode($line[$j]);
-            }
-
-
-        $i++;
-    }
-    $http = new Client();
-    fclose($file);
-
-    foreach($result as $key=>$department) {
-        if(isset($department['description'])){
-            DB::table('departments')->insert([
-                'id' => intval($department['id']),
-                'description' => $department['description'],
-            ]);
-        }
-    }
-
-
-});
 
 
 
