@@ -33,8 +33,32 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
+            'email' => 'oficina@diluga.com.ve',
+            'name' => 'Oficina',
+            'password' => bcrypt('123456789')
+        ]);
+
+        DB::table('users')->insert([
             'email' => 'ventas.simon@diluga.com.ve',
             'name' => 'Simón Ramírez',
+            'password' => bcrypt('123456789')
+        ]);
+
+        DB::table('users')->insert([
+            'email' => 'ventas.carlo@diluga.com.ve',
+            'name' => 'Carlo Rios',
+            'password' => bcrypt('123456789')
+        ]);
+
+        DB::table('users')->insert([
+            'email' => 'ventas.victor@diluga.com.ve',
+            'name' => 'victor',
+            'password' => bcrypt('123456789')
+        ]);
+
+        DB::table('users')->insert([
+            'email' => 'gerencia.rina@diluga.com.ve',
+            'name' => 'Rina Gonzalez',
             'password' => bcrypt('123456789')
         ]);
 
@@ -46,22 +70,36 @@ class DatabaseSeeder extends Seeder
 
         DB::table('users')->insert([
             'email' => 'facturacion.arnardo@diluga.com.ve',
-            'name' => 'Oficina',
+            'name' => 'Arnardo',
             'password' => bcrypt('123456789')
         ]);
 
+        
+
+        
         DB::table('salesmen')->insert([
-            'user_id' => 3,
-            'code' => '00001',
-            'name' => 'Oficina',
-            'phone' => '0235-3422025',
-            'email' => 'facturacion.arnardo@diluga.com.ve',
+            'user_id' => 1,
+            'code' => '00000',
+            'name' => 'Ramón Ledezma',
+            'phone' => '04160350957',
+            'email' => 'sistemas@inversionespc.com.ve',
             'zone_code' => '00020',
             'last_order' => '2016-03-30',
         ]);
 
         DB::table('salesmen')->insert([
             'user_id' => 2,
+            'code' => '00001',
+            'name' => 'Oficina',
+            'phone' => '0235-3422025',
+            'email' => 'oficina@diluga.com.ve',
+            'zone_code' => '00020',
+            'last_order' => '2016-03-30',
+        ]);
+
+        
+        DB::table('salesmen')->insert([
+            'user_id' => 3,
             'code' => '00002',
             'name' => 'Simón Ramírez',
             'phone' => '0416-3366934',
@@ -71,46 +109,62 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('salesmen')->insert([
-            'user_id' => 3,
+            'user_id' => 4,
+            'code' => '00003',
+            'name' => 'Carlo Rios',
+            'phone' => '0424-312-5687',
+            'email' => 'ventas.carlo@diluga.com.ve',
+            'zone_code' => '00020',
+            'last_order' => '2015-03-12',
+        ]);
+
+        
+        DB::table('salesmen')->insert([
+            'user_id' => 5,
+            'code' => '00004',
+            'name' => 'Victor Cappa',
+            'phone' => '0235-3422025',
+            'email' => 'ventas.victor@diluga.com.ve',
+            'zone_code' => '00020',
+            'last_order' => '2016-03-30',
+        ]);
+
+        DB::table('salesmen')->insert([
+            'user_id' => 6,
             'code' => '00005',
+            'name' => 'Rina González',
+            'phone' => '0235-3422025',
+            'email' => 'gerencia.rina@diluga.com.ve',
+            'zone_code' => '00020',
+            'last_order' => '2015-03-12',
+        ]);
+
+        
+        DB::table('salesmen')->insert([
+            'user_id' => 7,
+            'code' => '00006',
             'name' => 'Jose Gregorio',
             'phone' => '0424-3528707',
             'email' => 'ventas.joseg@diluga.com.ve',
             'zone_code' => '00014',
             'last_order' => '2016-03-30',
         ]);
-        /*
-        DB::table('salesmen')->insert([
-            'user_id' => 4,
-            'code' => '00004',
-            'name' => 'Carlo Rios',
-            'phone' => '0424-312-5687',
-            'email' => str_random(10).'@gmail.com',
-            'zone_code' => 'Epsilon',
-            'last_order' => '2015-03-12',
-        ]);
+        
+        
 
         DB::table('salesmen')->insert([
-            'user_id' => 5,
-            'code' => '00005',
-            'name' => 'Oficina',
+            'user_id' => 8,
+            'code' => '00007',
+            'name' => 'Arnardo Martínez',
             'phone' => '0424-312-5687',
-            'email' => str_random(10).'@gmail.com',
-            'zone_code' => 'Epsilon',
-            'last_order' => '2015-03-12',
+            'email' => 'facturacion.arnardo@diluga.com.ve',
+            'zone_code' => '00020',
+            'last_order' => '2016-03-30',
         ]);
 
-        DB::table('salesmen')->insert([
-            'user_id' => 6,
-            'code' => '00006',
-            'name' => 'Rina',
-            'phone' => '0424-312-5687',
-            'email' => str_random(10).'@gmail.com',
-            'zone_code' => 'Epsilon',
-            'last_order' => '2015-03-12',
-        ]);
+        
 
-        */
+        
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 
         Model::reguard();
