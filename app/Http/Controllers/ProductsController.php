@@ -16,6 +16,7 @@ class ProductsController extends Controller
      */
     public function index(Request $request)
     {
+        ob_start('ob_gzhandler');    
         $lubricantes = filter_var($request['lubricantes'], FILTER_VALIDATE_BOOLEAN);
         if ($lubricantes == true) {
             $products = \App\Product::

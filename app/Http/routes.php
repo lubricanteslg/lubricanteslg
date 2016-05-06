@@ -102,6 +102,7 @@ Route::group(['prefix' => 'api/v1', /*'middleware' => 'cors'*/], function () {
     header('Access-Control-Allow-Origin: *');
     header('Access-Control-Allow-Headers: Content-Type, Authorization');
     header('Access-Control-Allow-Methods: GET, POST, PUT');
+    header('Access-Control-Allow-Encoding: gzip, deflate');
 
     // Obtain Valid Access Token
     Route::post('oauth/access_token', function() {
