@@ -5,9 +5,15 @@
 
     RewriteEngine On
 
+    #Correctly set Authorization Header
     RewriteCond %{HTTP:Authorization} ^(.+)$
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
     
+    #Always HTTPS
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{SERVER_NAME}/ [R,L]
+
+
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)/$ /$1 [L,R=301]
